@@ -11,17 +11,6 @@ const products = [
         numReviews: 12
     },
     {
-        _id: 2,
-        name: "Light Blue - Day One Bucket Hat",
-        image: "/images/black-tshirt.JPG",
-        description: "This is a light blue bucket hat with a black print of the Day One logo. Other colours are avaliable",
-        category: "Hats",
-        price: 299,
-        countInStock: 20,
-        rating: 4.5,
-        numReviews: 12
-    },
-    {
         _id: 3,
         name: "Black - Since Day One Hoodie",
         image: "/images/black-yellow-hoodie.JPG",
