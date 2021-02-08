@@ -1,5 +1,6 @@
 import React from 'react'
 import {Card} from "react-bootstrap"
+import { Link } from 'react-router-dom'
 import Rating from "./Rating"
 
 const Product = (props) => {
@@ -8,7 +9,7 @@ const Product = (props) => {
             <Card className="my-3 p-3 rounded" style={{width: '17rem'}}>
                 <Card.Img variant="top" src={props.product.image} />
                 <Card.Body>
-                    <Card.Title>{props.product.name}</Card.Title>
+                    <Link to={`/product/${props.product._id}`}><Card.Title>{props.product.name}</Card.Title></Link>
                     <Card.Text>
                     <Rating 
                         color="gold"

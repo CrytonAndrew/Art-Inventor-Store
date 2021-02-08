@@ -1,5 +1,6 @@
 import React from 'react'
 import {Navbar, Nav, Form, Button, FormControl, Container} from 'react-bootstrap'
+import {LinkContainer} from "react-router-bootstrap"
  
 
 const Header = () => {
@@ -8,9 +9,13 @@ const Header = () => {
         <header>
             <Navbar bg="dark" variant="dark">
             <Container>
+                <LinkContainer to="/">
                 <Navbar.Brand href="#home">Day One</Navbar.Brand>
+                </LinkContainer>
                 <Nav className="mr-auto">
-                <Nav.Link href="#home">Home</Nav.Link>
+                <LinkContainer to="/">
+                    <Nav.Link href="#home">Home</Nav.Link>
+                </LinkContainer>
                 <Nav.Link href="#features"><i class="fas fa-shopping-cart"></i>Cart</Nav.Link>
                 <Nav.Link href="#pricing">Login</Nav.Link>
                 </Nav>
