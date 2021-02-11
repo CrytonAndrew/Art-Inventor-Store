@@ -1,7 +1,6 @@
 import React from 'react'
 import {Container, Row, Col} from "react-bootstrap";
 
-
 const Footer = () => {
     return (
         <footer>
@@ -9,7 +8,7 @@ const Footer = () => {
             <div className="main-footer">
                 <Row>
                     <Col >
-                        <h4>Shared Shop</h4>
+                        <h4>Since Day One</h4>
                         <p>
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
                         Vivamus et sollicitudin lacus. Aenean gravida eu tortor at tempus.

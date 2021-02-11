@@ -4,11 +4,11 @@ import products from "../products"
 import Rating from  "../components/Rating"
 
 const ProductScreen = ({ match }) => {
-    const product = products.find({id: match.params.id})
+    
 
     return (
         <>
-           <h1>{product.category}</h1> 
+           
         </>
     )
 }

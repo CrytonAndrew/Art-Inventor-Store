@@ -1,6 +1,16 @@
+footer {
+  background-color: #00adb5;
+}
+
 li {
   list-style-type: none;
   display: list-item;
+}
+
+/* Header  */
+.main-header {
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
 
 /* Footer lists */
@@ -13,6 +23,7 @@ li {
 .main-footer {
   padding-top: 25px;
   padding-bottom: 20px;
+  color: white;
 }
 
 .footer-titles {
