@@ -9,13 +9,13 @@ const Header = () => {
         <header>
             <Navbar bg="dark" variant="dark" className="main-header">
             <Container>
-                <Navbar.Brand>Since Day One</Navbar.Brand>
+                <LinkContainer to="/"><Navbar.Brand>Since Day One</Navbar.Brand></LinkContainer>
                 <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="ml-auto">
-                <Nav.Link href="/cart"><i className="fas fa-shopping-cart"></i> Cart</Nav.Link>
-                <Nav.Link href="/orders"><i class="fas fa-receipt"></i> Orders</Nav.Link>
-                <Nav.Link href="/profile"><i class="fas fa-user"></i> Profile</Nav.Link>
-                <Button href="/login" variant="outline-info">Sign In</Button>
+                <LinkContainer to="/cart"><Nav.Link><i className="fas fa-shopping-cart"></i> Cart</Nav.Link></LinkContainer>
+                <LinkContainer to="/profile"><Nav.Link ><i class="fas fa-receipt"></i> Orders</Nav.Link></LinkContainer>
+                <LinkContainer to="/profile"><Nav.Link><i class="fas fa-user"></i> Profile</Nav.Link></LinkContainer>
+                <LinkContainer to="/login"><Button variant="outline-info">Sign In</Button></LinkContainer>
                 </Nav>
                 </Navbar.Collapse>
             </Container>
