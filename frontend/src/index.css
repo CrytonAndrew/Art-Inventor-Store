@@ -6,6 +6,11 @@ li {
   list-style-type: none;
   display: list-item;
 }
+/* Product Screen  */
+.product_screen_image {
+  max-width: 110%;
+  max-height: 80%;
+}
 
 /* Header  */
 .main-header {
