@@ -17,7 +17,7 @@ const ProductScreen = ({match}) => {
         }
 
         fecthProduct()
-    })
+    }, [match])
 
     // const product = products.find((p) => String(p._id) === match.params.id)
     return <>

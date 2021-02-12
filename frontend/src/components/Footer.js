@@ -4,10 +4,10 @@ import {Container, Row, Col} from "react-bootstrap";
 const Footer = () => {
     return (
         <footer>
-            <Container className="container-fluid">
+            <Container>
             <div className="main-footer">
                 <Row>
-                    <Col >
+                    <Col sm={12} md={4} lg={3}>
                         <h4>Since Day One</h4>
                         <p>
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
@@ -16,7 +16,7 @@ const Footer = () => {
                         Etiam at pretium mi. 
                         </p>
                     </Col>
-                    <Col >
+                    <Col  sm={12} md={4} lg={3}>
                     <h4 className="footer-titles">Account Info</h4>
                     <div className="lists">
                         <ul>
@@ -26,7 +26,7 @@ const Footer = () => {
                         </ul>
                     </div>  
                     </Col>
-                    <Col >
+                    <Col sm={12} md={4} lg={3}>
                     <h4 className="footer-titles">Need Help?</h4>
                     <div className="lists">
                         <ul>
@@ -42,7 +42,7 @@ const Footer = () => {
                         </ul>
                     </div>  
                     </Col>
-                    <Col>
+                    <Col sm={12} md={4} lg={3}>
                     <h4 className="footer-titles">About Us</h4>
                     <div className="lists">
                         <ul>
