@@ -13,8 +13,8 @@ const Header = () => {
                 <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="ml-auto">
                 <LinkContainer to="/cart"><Nav.Link><i className="fas fa-shopping-cart"></i> Cart</Nav.Link></LinkContainer>
-                <LinkContainer to="/profile"><Nav.Link ><i class="fas fa-receipt"></i> Orders</Nav.Link></LinkContainer>
-                <LinkContainer to="/profile"><Nav.Link><i class="fas fa-user"></i> Profile</Nav.Link></LinkContainer>
+                <LinkContainer to="/profile"><Nav.Link ><i className="fas fa-receipt"></i> Orders</Nav.Link></LinkContainer>
+                <LinkContainer to="/profile"><Nav.Link><i className="fas fa-user"></i> Profile</Nav.Link></LinkContainer>
                 <LinkContainer to="/login"><Button variant="outline-info">Sign In</Button></LinkContainer>
                 </Nav>
                 </Navbar.Collapse>
