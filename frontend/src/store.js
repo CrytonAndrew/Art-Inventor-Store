@@ -11,14 +11,24 @@ import {
     productDetailsReducer
  } from "./reducers/productReducers"
 
+// Cart Reducers
+import { cartReducer } from "./reducers/cartReducers"
+
 // All reducers
 const reducer = combineReducers({
     productList: productListReducer,
-    productDetails: productDetailsReducer
+    productDetails: productDetailsReducer,
+    cart: cartReducer
 }) 
 
+// Getting the items from storage
+const cartItemFromStorage = localStorage.getItem('cartItems') 
+        ? JSON.parse(localStorage.getItem('cartItems'))
+        : []
 // loads this first when the redux store loads 
-const initialState = {} 
+const initialState = {
+    cart: { cartItems: cartItemFromStorage }
+} 
 
 // All the middleware
 const middleware =[ thunk ]
