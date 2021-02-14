@@ -24,7 +24,7 @@ const ProductScreen = ({match}) => {
         <Link className="btn btn-info my-3 rounded" to="/">
             Home Page
         </Link>
-        {loading ? <Spinner /> : error ? <Message variant="danger" header="Oops" message={error}/> : <Row>
+        {loading ? <Spinner /> : error ? <Message variant="danger" header="Oops! Something went wrong" message={error}/> : <Row>
             <Col md={6}>
                 <Image className="product_screen_image" src={product.image} alt={product.name} rounded fluid/>
             </Col>
