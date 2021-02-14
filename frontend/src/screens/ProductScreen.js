@@ -1,30 +1,30 @@
-import React, {useState, useEffect} from 'react'
+import React, {useEffect} from 'react'
+import {useDispatch, useSelector} from "react-redux"
 import {Link} from 'react-router-dom'
 import {Row, Col, Image, ListGroup, Card, Button} from "react-bootstrap"
 import Rating from "../components/Rating"
-import axios from "axios"
-
+import {getProductDetails} from "../actions/productActions"
+import Spinner from "../components/Spinner"
+import Message from "../components/Message"
 
 
 const ProductScreen = ({match}) => {
-    const [product, setProduct] = useState({})
+    const dispatch = useDispatch()
+
+    const productDetails = useSelector(state => state.productDetails)
+    const {loading, error, product} = productDetails
+    
 
     useEffect(() => {
-        const fecthProduct = async () => {
-            const {data} = await axios.get(`/api/products/${match.params.id}`)
+       dispatch(getProductDetails(match.params.id))
+    }, [match, dispatch])
 
-            setProduct(data)
-        }
-
-        fecthProduct()
-    }, [match])
-
-    // const product = products.find((p) => String(p._id) === match.params.id)
+ 
     return <>
         <Link className="btn btn-info my-3 rounded" to="/">
             Home Page
         </Link>
-        <Row>
+        {loading ? <Spinner /> : error ? <Message variant="danger" header="Oops" message={error}/> : <Row>
             <Col md={6}>
                 <Image className="product_screen_image" src={product.image} alt={product.name} rounded fluid/>
             </Col>
@@ -84,7 +84,7 @@ const ProductScreen = ({match}) => {
                     </ListGroup>
                 </Card>
             </Col>
-        </Row>
+        </Row>}
     </>
     
 }

@@ -6,11 +6,15 @@ import thunk from "redux-thunk"
 import { composeWithDevTools } from "redux-devtools-extension"
 
 // Products Reducer
-import { productListReducer } from "./reducers/productReducers"
+import { 
+    productListReducer,
+    productDetailsReducer
+ } from "./reducers/productReducers"
 
 // All reducers
 const reducer = combineReducers({
-    productList: productListReducer
+    productList: productListReducer,
+    productDetails: productDetailsReducer
 }) 
 
 // loads this first when the redux store loads 
