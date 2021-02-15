@@ -31,4 +31,27 @@ const authUser = asyncHandler(async(req, res) => {
     }
 })
 
-export {authUser}
+// @desc    Get user profile
+// @route   GET /api/users/profile
+// @access  private
+const getUserProfile = asyncHandler(async(req, res) => {
+    // Get currently logged in user details -> These details are due to the authorization takes place
+    // The was first assigned a token, the token is then used to authorize the user for accessing private routes
+    const user = await User.findById(req.user._id)
+
+    // Sending back the information of the currently logged in user
+    if (user) {
+        res.json({
+            _id: user._id,
+            name: user.name,
+            email: user.email,
+            isAdmin: user.isAdmin
+        })
+
+    } else {
+        res.status(404)
+        throw new Error("User not found")
+    }
+})
+
+export { authUser, getUserProfile }
