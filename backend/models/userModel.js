@@ -30,6 +30,21 @@ userSchema.methods.matchPassword = async function(enteredPassword) {
     return await bcrypt.compare(enteredPassword, this.password)
 }
 
+// Middleware to encrypt our password
+// Methods can be set to happen to before or after, even when sending 
+// This runs before saving
+userSchema.pre('save', async function(next) {
+    // Do this only if the password is modified else skip 
+    if (!this.isModified('password')) {
+        next()
+    }
+
+    // encrypt the password
+    // this will encrypt our password when we register a new user
+    const salt = await bcrypt.genSalt(10)
+    this.password = await bcrypt.hash(this.password, salt)
+})
+
 const User = mongoose.model("User", userSchema)
 
 export default User
