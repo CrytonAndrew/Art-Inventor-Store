@@ -1,5 +1,5 @@
 import axios from "axios" // For requesting the product data based on the ID
-import { CART_ADD_ITEM } from "../constants/cartConstants"
+import { CART_ADD_ITEM, CART_REMOVE_ITEM } from "../constants/cartConstants"
 
 // getState gets the entire state tree
 // Then we can choose what we want from the state
@@ -20,5 +20,17 @@ export const addToCart = (id, qty) => async(dispatch, getState) => {
 
     // Adding to local storage
     // Getting the items from our state
+    localStorage.setItem('cartItems', JSON.stringify(getState().cart.cartItems))
+}
+
+export const removeFromCart = (id) => (dispatch, getState) => {
+
+    // Dispatch to our reducer the ID that we need to exclude from the cartItems
+    dispatch({
+        type: CART_REMOVE_ITEM,
+        payload: id
+    })
+
+    // We update our local storage with the new cartItems without the other product
     localStorage.setItem('cartItems', JSON.stringify(getState().cart.cartItems))
 }

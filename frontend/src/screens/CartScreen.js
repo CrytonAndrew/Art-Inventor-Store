@@ -4,7 +4,10 @@ import { Link } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 import { Col, Row, ListGroup, Image, Form, Button, Card} from "react-bootstrap" 
 import Message from "../components/Message"
-import {addToCart} from "../actions/cartActions"
+import {
+    addToCart, 
+    removeFromCart
+} from "../actions/cartActions"
 
 // Location is for getting our "qty" value 
 const CartScreen = ({match, location, history}) => {
@@ -27,7 +30,7 @@ const CartScreen = ({match, location, history}) => {
     }, [dispatch, productId, qty])
 
     const removeFromCartHandler = (id) => {
-
+        dispatch(removeFromCart(id))
     }
 
     const checkoutHandler = () => {
