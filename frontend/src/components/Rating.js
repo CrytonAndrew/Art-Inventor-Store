@@ -67,12 +67,12 @@ Rating.defaultProps = {
     color: 'gold'
 }
 
-// This will type check our props if something goes wrong:
-// E.g if we pass in a number for our text it will show us the error in console
-Rating.propTypes = {
-    value: PropTypes.number.isRequired,
-    text: PropTypes.string.isRequired,
-    color: PropTypes.string
-}
+// // This will type check our props if something goes wrong:
+// // E.g if we pass in a number for our text it will show us the error in console
+// Rating.propTypes = {
+//     value: PropTypes.number.isRequired,
+//     text: PropTypes.string.isRequired,
+//     color: PropTypes.string
+// }
 export default Rating
 

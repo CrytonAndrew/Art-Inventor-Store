@@ -10,7 +10,7 @@ import Message from "../components/Message"
 // History redirects to a page 
 const ProductScreen = ({match, history}) => {
     // Setting the quantity state -> Qty is a component level state
-    const [qty, setQty] = useState(0)
+    const [qty, setQty] = useState(1)
 
     const dispatch = useDispatch()
 
@@ -93,13 +93,13 @@ const ProductScreen = ({match, history}) => {
                          )}
                          <ListGroup.Item>
                             <Button className="btn-block" type="button" variant="secondary">
-                                <i class="fas fa-heart"></i> Wishlist
+                                <i className="fas fa-heart"></i> Wishlist
                             </Button>
                          </ListGroup.Item>
                          <ListGroup.Item>
                          {product.countInStock <= 0 
                          ? <Button className="btn-block" type="button" variant="primary" disabled>
-                                <i class="fas fa-shopping-cart"></i> Add to Cart
+                                <i className="fas fa-shopping-cart"></i> Add to Cart
                             </Button>
                         : <Button 
                             onClick={addToCartHandler}
@@ -107,7 +107,7 @@ const ProductScreen = ({match, history}) => {
                             type="button" 
                             variant="primary"
                             >
-                                <i class="fas fa-shopping-cart"></i> Add to Cart
+                                <i className="fas fa-shopping-cart"></i> Add to Cart
                             </Button>}
                          </ListGroup.Item>
                     </ListGroup>

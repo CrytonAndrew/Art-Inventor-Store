@@ -25,6 +25,7 @@ const reducer = combineReducers({
 const cartItemFromStorage = localStorage.getItem('cartItems') 
         ? JSON.parse(localStorage.getItem('cartItems'))
         : []
+    
 // loads this first when the redux store loads 
 const initialState = {
     cart: { cartItems: cartItemFromStorage }
