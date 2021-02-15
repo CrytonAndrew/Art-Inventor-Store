@@ -1,17 +1,12 @@
 import React from 'react'
 import {Alert} from "react-bootstrap"
 
-const Message = ({variant, header, message}) => {
-    return (
-        <>
-            <Alert variant={variant}>
-            <Alert.Heading>{header}</Alert.Heading>
-            <p>
-              {message}
-            </p>
-            </Alert>
-        </>
-    )
+const Message = ({variant, children}) => {
+    return <Alert variant={variant}>{children}</Alert>
+}
+
+Message.defaultProps = {
+    variant: "info"
 }
 
 export default Message
