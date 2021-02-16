@@ -1,4 +1,10 @@
-import { USER_LOGIN_FAIL, USER_LOGIN_REQUEST, USER_LOGIN_SUCCESS } from "../constants/userConstants"
+import { 
+    USER_LOGIN_FAIL, 
+    USER_LOGIN_REQUEST, 
+    USER_LOGIN_SUCCESS, 
+    USER_LOGOUT 
+} from "../constants/userConstants"
+
 import axios from "axios"
 
 // Using some redux thunk here -> dispatch
@@ -33,4 +39,11 @@ export const login = (email, password) => async (dispatch) => {
             : error.message
         })
     }
+}
+
+export const logout = () => (dispatch) => {
+    localStorage.removeItem('userInfo') // Clear all userInfo
+    dispatch({
+        type: USER_LOGOUT
+    })
 }
