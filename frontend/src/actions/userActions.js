@@ -1,4 +1,7 @@
 import { 
+    USER_DETAILS_FAIL,
+    USER_DETAILS_REQUEST,
+    USER_DETAILS_SUCCESS,
     USER_LOGIN_FAIL, 
     USER_LOGIN_REQUEST, 
     USER_LOGIN_SUCCESS, 
@@ -86,4 +89,32 @@ export const logout = () => (dispatch) => {
     dispatch({
         type: USER_LOGOUT
     })
+}
+
+export const getUserDetails = () => async(dispatch) => {
+    try {
+            dispatch({
+            type: USER_DETAILS_REQUEST
+        })
+
+        const config = {
+            header: {
+                "Content-Type": "application/json"
+            }
+        }
+
+        const { data } = await axios.get("/api/users/profile", config)
+
+        dispatch({
+            type: USER_DETAILS_SUCCESS,
+            payload: data
+        })
+    } catch (error){
+        dispatch({
+            type: USER_DETAILS_FAIL,
+            payload: error.response && error.response.data.message 
+            ? error.response.data.message 
+            : error.message
+        })
+    }
 }
