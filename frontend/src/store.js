@@ -6,7 +6,10 @@ import thunk from "redux-thunk"
 import { composeWithDevTools } from "redux-devtools-extension"
 
 // User reducers:
-import { userLoginReducer } from "./reducers/userReducers"
+import { 
+    userLoginReducer,
+    userRegisterReducer
+ } from "./reducers/userReducers"
 
 // Products Reducer
 import { 
@@ -22,7 +25,8 @@ const reducer = combineReducers({
     productList: productListReducer,
     productDetails: productDetailsReducer,
     cart: cartReducer,
-    userLogin: userLoginReducer
+    userLogin: userLoginReducer,
+    userRegister: userRegisterReducer,
 }) 
 
 // Getting the items from storage

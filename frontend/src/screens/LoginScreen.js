@@ -29,6 +29,8 @@ const LoginScreen = ({location, history}) => {
             history.push(redirect)
         }
     }, [history, userInfo, redirect])
+
+    
     const submitHanlder = (e) => {
         e.preventDefault()
         dispatch(login(email, password))
