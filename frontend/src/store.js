@@ -9,7 +9,8 @@ import { composeWithDevTools } from "redux-devtools-extension"
 import { 
     userLoginReducer,
     userRegisterReducer,
-    userDetailsReducer
+    userDetailsReducer,
+    userUpdateProfileReducer,
  } from "./reducers/userReducers"
 
 // Products Reducer
@@ -29,6 +30,7 @@ const reducer = combineReducers({
     userLogin: userLoginReducer,
     userRegister: userRegisterReducer,
     userDetails: userDetailsReducer,
+    userUpdateProfile: userUpdateProfileReducer,
 }) 
 
 // Getting the items from storage

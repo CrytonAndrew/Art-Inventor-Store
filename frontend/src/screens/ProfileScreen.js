@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux"
 import {Form, Button, Row, Col} from "react-bootstrap"
 import Message from "../components/Message"
 import Spinner from "../components/Spinner"
-import { getUserDetails } from "../actions/userActions"
+import { getUserDetails, updateUserProfile } from "../actions/userActions"
 
 const ProfileScreen = ({ location, history }) => {
     const [name, setName] = useState("")
@@ -20,6 +20,8 @@ const ProfileScreen = ({ location, history }) => {
     const userDetails = useSelector((state) => state.userDetails)
     const { loading, error, user} = userDetails
 
+    const userUpdateProfile = useSelector(state => state.userUpdateProfile)
+    const { success, loading: loadingUpdate} = userUpdateProfile
 
     useEffect(() => {
         if (userInfo) {
@@ -36,7 +38,7 @@ const ProfileScreen = ({ location, history }) => {
         else {
             history.push("/login")
         }
-    }, [dispatch, history, userInfo, user, name, email])
+    }, [dispatch, history, userInfo, user])
 
     const submitHanlder = (e) => {
         e.preventDefault()
@@ -45,21 +47,20 @@ const ProfileScreen = ({ location, history }) => {
         }
         else {
             // Dispatch update profile
+            dispatch(updateUserProfile({id: user._id, name, email, password}))
         }
         
     }
 
     return (
         <>
-        <Row>
         {error && <Message variant="danger">{error}</Message>}
         {message && <Message variant="danger">{message}</Message>}
+        {success && <Message variant="success">Successfully Updated Profile</Message>}
         {loading && <Spinner />}
+        <Row>
         <Col>
-            <h1>
-                User Name
-            </h1>
-
+            {loadingUpdate && <Spinner />}
         </Col>
         <Col className="py-3">
         <h1>Update Account Details:</h1>
