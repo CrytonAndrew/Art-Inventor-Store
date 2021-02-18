@@ -91,19 +91,26 @@ export const logout = () => (dispatch) => {
     })
 }
 
-export const getUserDetails = () => async(dispatch) => {
+// We need to pass in token
+// We getState -> To tap into the user details
+export const getUserDetails = (id) => async(dispatch, getState) => {
     try {
             dispatch({
             type: USER_DETAILS_REQUEST
         })
 
+        // Get the token from the state, when the user logges in
+        const { userLogin: { userInfo }} = getState()
+
+        // Pass the token
         const config = {
-            header: {
-                "Content-Type": "application/json"
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${userInfo.token}`
             }
         }
 
-        const { data } = await axios.get("/api/users/profile", config)
+        const { data } = await axios.get(`/api/users/${id}`, config)
 
         dispatch({
             type: USER_DETAILS_SUCCESS,

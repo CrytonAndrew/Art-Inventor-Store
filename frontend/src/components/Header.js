@@ -29,9 +29,9 @@ const Header = () => {
                 <LinkContainer to="/profile"><Nav.Link ><i className="fas fa-receipt"></i> Orders</Nav.Link></LinkContainer>
                 {userInfo 
                 ? <NavDropdown title={<i className="fas fa-user">{userInfo.name}</i>} id="basic-nav-dropdown">
-                    <NavDropdown.Item >My Account</NavDropdown.Item>
+                    <LinkContainer to="/profile"><NavDropdown.Item >My Account</NavDropdown.Item></LinkContainer>
                     <NavDropdown.Divider />
-                    <NavDropdown.Item >Help</NavDropdown.Item>
+                    <LinkContainer to="/help"><NavDropdown.Item>Help</NavDropdown.Item></LinkContainer>
                     <NavDropdown.Divider />
                     <NavDropdown.Item onClick={logoutHandler}>Log Out</NavDropdown.Item>
                 </NavDropdown>
