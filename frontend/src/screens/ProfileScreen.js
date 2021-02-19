@@ -14,6 +14,7 @@ const ProfileScreen = ({ location, history }) => {
 
     const dispatch = useDispatch()
 
+    // Using this state to check if the user is logged in 
     const userLogin = useSelector((state) => state.userLogin)
     const { userInfo } = userLogin
 
@@ -25,7 +26,6 @@ const ProfileScreen = ({ location, history }) => {
 
     useEffect(() => {
         if (userInfo) {
-            console.log(user)
             if (!user.name) {
                 dispatch(getUserDetails("profile"))
             }
@@ -38,7 +38,7 @@ const ProfileScreen = ({ location, history }) => {
         else {
             history.push("/login")
         }
-    }, [dispatch, history, userInfo, user])
+    }, [dispatch, history, userInfo, user, name, email])
 
     const submitHanlder = (e) => {
         e.preventDefault()

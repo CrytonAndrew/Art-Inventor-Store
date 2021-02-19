@@ -50,10 +50,12 @@ export const userRegisterReducer = (state = {}, action) => {
     }
 }
 
+// Getting the users details 
 export const userDetailsReducer = (state = { user: {}}, action) => {
     switch(action.type) {
         case USER_DETAILS_REQUEST:
             return {
+                ...state, // Getting what is the initial state
                 loading: true
             }
         case USER_DETAILS_SUCCESS:

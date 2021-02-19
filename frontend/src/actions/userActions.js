@@ -95,7 +95,9 @@ export const logout = () => (dispatch) => {
 }
 
 // We need to pass in token
-// We getState -> To tap into the user details
+// We getState -> To tap into the userInfo which has the token 
+// Id -> for getting the users details for profile is 'profile'
+// Else for getting user info for admin we pass in the actual 'id'
 export const getUserDetails = (id) => async(dispatch, getState) => {
     try {
             dispatch({
