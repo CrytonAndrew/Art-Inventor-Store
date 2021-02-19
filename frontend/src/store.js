@@ -48,10 +48,17 @@ const shippingAddressFromStorage = localStorage.getItem("shippingAddress")
         ? JSON.parse(localStorage.getItem("shippingAddress")) 
         : {}
 
+const paymentMethodFromStorage = localStorage.getItem('paymentMethod') 
+        ? JSON.stringify(localStorage.getItem('paymentMethod'))
+        : ""
 
 // loads this first when the redux store loads 
 const initialState = {
-    cart: { cartItems: cartItemFromStorage, shippingAddress: shippingAddressFromStorage},
+    cart: { 
+        cartItems: cartItemFromStorage, 
+        shippingAddress: shippingAddressFromStorage, 
+        paymentMethod: paymentMethodFromStorage
+    },
     userLogin: { userInfo: userInfoFromStorage},
     
 } 
