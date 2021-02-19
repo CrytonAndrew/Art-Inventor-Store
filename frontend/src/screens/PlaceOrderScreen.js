@@ -12,6 +12,23 @@ const PlaceOrderScreen = () => {
 
     const cart = useSelector(state => state.cart)
 
+    // Price calculations
+
+    const addDecimals = (num) => {
+        return (Math.round(num * 100) / 100).toFixed(2)
+    }
+
+    // Using the reduce function to calculate the price of the items in the cart
+    cart.itemsPrice = addDecimals(cart.cartItems.reduce((acc, item) => acc + item.price * item.qty, 0))
+
+    // Up for change 
+    cart.shippingPrice= addDecimals(cart.itemsPrice > 500 ? Number(0) : Number(100))
+
+    // Up for change
+    cart.taxPrice = addDecimals(Number((0.14 * cart.itemsPrice)).toFixed(2))
+
+    cart.totalPrice = addDecimals(Number(cart.itemsPrice) + Number(cart.shippingPrice) + Number(cart.taxPrice))
+  
 
     const placeorderHandler = () => {
 
@@ -86,19 +103,19 @@ const PlaceOrderScreen = () => {
                             <ListGroup.Item>
                             <Row>
                                 <Col>Shipping</Col>
-                                <Col>R {cart.itemsPrice}</Col>
+                                <Col>R {cart.shippingPrice}</Col>
                             </Row>
                             </ListGroup.Item>
                             <ListGroup.Item>
                             <Row>
                                 <Col>Tax</Col>
-                                <Col>R {cart.itemsPrice}</Col>
+                                <Col>R {cart.taxPrice}</Col>
                             </Row>
                             </ListGroup.Item>
                             <ListGroup.Item>
                             <Row>
                                 <Col>Total</Col>
-                                <Col>R {cart.itemsPrice}</Col>
+                                <Col>R {cart.totalPrice}</Col>
                             </Row>
                             </ListGroup.Item>
                             <ListGroup.Item>
