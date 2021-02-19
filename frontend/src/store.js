@@ -41,11 +41,19 @@ const cartItemFromStorage = localStorage.getItem('cartItems')
 const userInfoFromStorage = localStorage.getItem('userInfo') 
         ? JSON.parse(localStorage.getItem('userInfo'))
         : null
-    
+
+// If the is an address we want to add it to the state
+// It gets added to out cart state
+const shippingAddressFromStorage = localStorage.getItem("shippingAddress") 
+        ? JSON.parse(localStorage.getItem("shippingAddress")) 
+        : {}
+
+
 // loads this first when the redux store loads 
 const initialState = {
-    cart: { cartItems: cartItemFromStorage },
-    userLogin: { userInfo: userInfoFromStorage}
+    cart: { cartItems: cartItemFromStorage, shippingAddress: shippingAddressFromStorage},
+    userLogin: { userInfo: userInfoFromStorage},
+    
 } 
 
 // All the middleware

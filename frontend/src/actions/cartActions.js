@@ -1,5 +1,9 @@
 import axios from "axios" // For requesting the product data based on the ID
-import { CART_ADD_ITEM, CART_REMOVE_ITEM } from "../constants/cartConstants"
+import { 
+    CART_ADD_ITEM, 
+    CART_REMOVE_ITEM, 
+    CART_SAVE_SHIPPING_ADDRESS 
+} from "../constants/cartConstants"
 
 // getState gets the entire state tree
 // Then we can choose what we want from the state
@@ -33,4 +37,14 @@ export const removeFromCart = (id) => (dispatch, getState) => {
 
     // We update our local storage with the new cartItems without the other product
     localStorage.setItem('cartItems', JSON.stringify(getState().cart.cartItems))
+}
+
+
+export const saveShippingAddress = (data) => (dispatch) => {
+    dispatch({
+        type: CART_SAVE_SHIPPING_ADDRESS,
+        payload: data
+    })
+
+    localStorage.setItem('shippingAddress', JSON.stringify(data))
 }
