@@ -4,6 +4,7 @@ import {Form, Button, Row, Col} from "react-bootstrap"
 import Message from "../components/Message"
 import Spinner from "../components/Spinner"
 import { getUserDetails, updateUserProfile } from "../actions/userActions"
+import { USER_UPDATE_PROFILE_RESET } from '../constants/userConstants'
 
 const ProfileScreen = ({ location, history }) => {
     const [name, setName] = useState("")
@@ -26,7 +27,8 @@ const ProfileScreen = ({ location, history }) => {
 
     useEffect(() => {
         if (userInfo) {
-            if (!user.name) {
+            if (!user.name || !user || success) {
+                dispatch({type: USER_UPDATE_PROFILE_RESET})
                 dispatch(getUserDetails("profile"))
             }
             else {
@@ -38,7 +40,7 @@ const ProfileScreen = ({ location, history }) => {
         else {
             history.push("/login")
         }
-    }, [dispatch, history, userInfo, user, name, email])
+    }, [dispatch, history, userInfo, user, success])
 
     const submitHanlder = (e) => {
         e.preventDefault()
@@ -47,6 +49,7 @@ const ProfileScreen = ({ location, history }) => {
         }
         else {
             // Dispatch update profile
+            // Update profile takes in a user object
             dispatch(updateUserProfile({id: user._id, name, email, password}))
         }
         

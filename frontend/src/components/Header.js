@@ -26,9 +26,9 @@ const Header = () => {
                 <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="ml-auto py-3">
                 <LinkContainer to="/cart"><Nav.Link><i className="fas fa-shopping-cart"></i> Cart</Nav.Link></LinkContainer>
-                <LinkContainer to="/profile"><Nav.Link ><i className="fas fa-receipt"></i> Orders</Nav.Link></LinkContainer>
+                <LinkContainer to="/orders"><Nav.Link ><i className="fas fa-receipt"></i> Orders</Nav.Link></LinkContainer>
                 {userInfo 
-                ? <NavDropdown title={<i className="fas fa-user">{userInfo.name}</i>} id="basic-nav-dropdown">
+                ? <NavDropdown title={userInfo.name} id="basic-nav-dropdown">
                     <LinkContainer to="/profile"><NavDropdown.Item >My Account</NavDropdown.Item></LinkContainer>
                     <NavDropdown.Divider />
                     <LinkContainer to="/help"><NavDropdown.Item>Help</NavDropdown.Item></LinkContainer>
