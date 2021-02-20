@@ -20,7 +20,14 @@ import {
  } from "./reducers/productReducers"
 
 // Cart Reducers
-import { cartReducer } from "./reducers/cartReducers"
+import { 
+    cartReducer 
+} from "./reducers/cartReducers"
+
+// Orders reducers
+import {
+    orderCreateReducer
+} from "./reducers/orderReducers"
 
 // All reducers
 const reducer = combineReducers({
@@ -31,6 +38,7 @@ const reducer = combineReducers({
     userRegister: userRegisterReducer,
     userDetails: userDetailsReducer,
     userUpdateProfile: userUpdateProfileReducer,
+    orderCreate: orderCreateReducer
 }) 
 
 // Getting the items from storage
