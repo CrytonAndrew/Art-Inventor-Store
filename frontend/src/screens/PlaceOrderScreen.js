@@ -1,7 +1,6 @@
 import React, { useState} from 'react'
 import { useDispatch, useSelector } from "react-redux"
 import {Button, Row, Col, ListGroup, Image, Card} from "react-bootstrap"
-import FormContainer from "../components/FormContainer"
 import CheckoutStatus from "../components/CheckoutStatus"
 import Message  from "../components/Message"
 import { Link } from 'react-router-dom'
