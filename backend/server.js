@@ -22,6 +22,9 @@ app.get("/", (req, res) => {
     res.send("API up and running")
 })
 
+// Paypal client id
+app.get("/api/config/paypal", (req, res) => res.send(process.env.PAYPAL_CLIENT_ID))
+
 // Pointing the productRoutes 
 app.use("/api/products", productRoutes)
 

@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState} from 'react'
+import axios from "axios"
 import { useDispatch, useSelector } from "react-redux"
 import { Row, Col, ListGroup, Image, Card} from "react-bootstrap"
 import Message  from "../components/Message"
@@ -9,11 +10,17 @@ import { getOrderDetails } from "../actions/orderActions"
 const OrderScreen = ({match}) => {
     const dispatch = useDispatch()
 
+    const [sdkReady, setSdkReady] = useState(false)
+
     const orderId = match.params.id
 
 
     const orderDetails = useSelector(state => state.orderDetails)
     const {error, loading, order} = orderDetails
+
+    const orderPay = useSelector(state => state.orderPay)
+    const {loading: loadingPay, success: successPay} = orderPay
+
 
     if (!loading) {
         const addDecimals = (num) => {
@@ -25,14 +32,42 @@ const OrderScreen = ({match}) => {
     }
 
     useEffect(() => {
-       if (!order || order._id !== orderId) {
+        const addPayPalScript = async () => {
+
+            const {data: clientId} = await axios.get("/api/config/paypal")
+            
+            // Create the js script
+            const script = document.createElement('script')
+            script.type = "text/javascript"
+            script.src = `https://www.paypal.com/sdk/js?client-id=${clientId}`
+            script.async = true
+
+            script.onload = () => {
+                setSdkReady(true)
+            }
+
+            document.body.appendChild(script)
+        }
+
+        // If the order gets paid, the order gets reloaded 
+        // After the reload the order comes back paid
+        if (!order || order._id !== orderId || successPay) {
             dispatch(getOrderDetails(orderId))
+        } 
+        else if (!order.isPaid) {
+            // If the order is not paid 
+            // We check if the scipt is not there, then we add the script
+            if (!window.paypal) {
+               addPayPalScript()
+            }
+            else {
+               setSdkReady(true)
+            }
        }
-    }, [dispatch, order, orderId])
+    }, [dispatch, order, orderId, successPay])
 
 
-    return loading ? <Spinnner /> : error ? <Message>{error}</Message>  
-        : <>
+    return loading ? <Spinnner /> : error ? <Message>{error}</Message>  : <>
         <h1>Order: {orderId}</h1>
              <Row className="mb-3">
                 <Col md={8}>
