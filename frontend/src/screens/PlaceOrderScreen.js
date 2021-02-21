@@ -45,7 +45,7 @@ const PlaceOrderScreen = ({history}) => {
             shippingAddress: cart.shippingAddress, 
             paymentMethod: cart.paymentMethod,
             itemsPrice: cart.itemsPrice,
-            shippingPrice: cart.shippingAddress, 
+            shippingPrice: cart.shippingPrice, 
             taxPrice: cart.taxPrice, 
             totalPrice: cart.totalPrice
         }))
