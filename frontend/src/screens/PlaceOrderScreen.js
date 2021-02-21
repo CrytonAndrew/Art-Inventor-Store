@@ -18,7 +18,7 @@ const PlaceOrderScreen = ({history}) => {
     }
 
     // Using the reduce function to calculate the price of the items in the cart
-    cart.itemsPrice = addDecimals(cart.cartItems.reduce((acc, item) => acc + item.price * item.qty, 0))
+    cart.itemsPrice = addDecimals(Number(cart.cartItems.reduce((acc, item) => acc + item.price * item.qty, 0)))
 
     // Up for change 
     cart.shippingPrice= addDecimals(cart.itemsPrice > 500 ? Number(0) : Number(100))
@@ -84,7 +84,7 @@ const PlaceOrderScreen = ({history}) => {
                                 : (
                                     <ListGroup variant="flush">
                                         {cart.cartItems.map((item, index) => (
-                                            <ListGroup.Item>
+                                            <ListGroup.Item key={index}>
                                                 <Row>
                                                     <Col md={1}>
                                                         <Image src={item.image} alt={item.name} fluid rounded/>
