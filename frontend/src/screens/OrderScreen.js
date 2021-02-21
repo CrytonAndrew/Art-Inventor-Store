@@ -40,7 +40,6 @@ const OrderScreen = ({match}) => {
                     <h2>Shipping</h2>
                         <ListGroup.Item>
                             <p>
-                                <br></br>
                                 <strong>Name:</strong> {order.user.name}
                                 <br></br>
                                 <strong>Email:</strong> <a href={`mailto:${order.user.email}`}>{order.user.email}</a>
