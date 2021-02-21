@@ -10,45 +10,59 @@ const OrderScreen = ({match}) => {
     const dispatch = useDispatch()
 
     const orderId = match.params.id
-    
+
+
     const orderDetails = useSelector(state => state.orderDetails)
     const {error, loading, order} = orderDetails
 
+    if (!loading) {
+        const addDecimals = (num) => {
+            return (Math.round(num * 100) / 100).toFixed(2)
+        }
+    
+        // Using the reduce function to calculate the price of the items in the cart
+        order.itemsPrice = addDecimals(Number(order.orderItems.reduce((acc, item) => acc + item.price * item.qty, 0)))
+    }
 
     useEffect(() => {
-       dispatch(getOrderDetails(orderId))
-    }, [dispatch, orderId])
+       if (!order || order._id !== orderId) {
+            dispatch(getOrderDetails(orderId))
+       }
+    }, [dispatch, order, orderId])
 
-    const placeorderHandler = () => {
-       // Dispacth Payment 
-    }
 
     return loading ? <Spinnner /> : error ? <Message>{error}</Message>  
         : <>
-        <h1>Order {orderId}</h1>
-             <Row>
+        <h1>Order: {orderId}</h1>
+             <Row className="mb-3">
                 <Col md={8}>
                     <ListGroup variant="flush">
+                    <h2>Shipping</h2>
                         <ListGroup.Item>
-                            <h2>Shipping</h2>
                             <p>
+                                <br></br>
+                                <strong>Name:</strong> {order.user.name}
+                                <br></br>
+                                <strong>Email:</strong> <a href={`mailto:${order.user.email}`}>{order.user.email}</a>
+                                <br></br>
                                 <strong>Address:</strong>
-                                <br></br> 
                                 {order.shippingAddress.address}
-                                <br></br> 
                                 {order.shippingAddress.city}
-                                <br></br> 
                                 {order.shippingAddress.postalCode}
-                                <br></br> 
                                 {order.shippingAddress.country}
                             </p>
+                            {order.isDelivered ? <Message variant="success"> Delivered on {order.deliveredAt} </Message>
+                            : <Message variant="danger"> Order not Delivered</Message>}
                         </ListGroup.Item>
                         <ListGroup.Item>
                             <h2>Payment</h2>
                             <p>
                                 <strong>Method: </strong> {order.paymentMethod}
                             </p>
+                            {order.isPaid ? <Message variant="success"> Paid on {order.paidAt} </Message>
+                            : <Message variant="danger"> Order not Paid</Message>}
                         </ListGroup.Item>
+
                         <ListGroup.Item>
                             <h2>Order Items</h2>
                             {order.orderItems.length === 0 
@@ -106,19 +120,6 @@ const OrderScreen = ({match}) => {
                                 <Col>Total</Col>
                                 <Col>R {order.totalPrice}</Col>
                             </Row>
-                            </ListGroup.Item>
-                            <ListGroup.Item>
-                                {error && <Message>{error}</Message>}
-                            </ListGroup.Item>
-                            <ListGroup.Item>
-                                <Button 
-                                    type="button" 
-                                    className="btn-block" 
-                                    disabled={order.cartItems === 0}
-                                    onClick={placeorderHandler}
-                                    >
-                                        Purchase
-                                    </Button>
                             </ListGroup.Item>
                         </ListGroup>
                     </Card>
