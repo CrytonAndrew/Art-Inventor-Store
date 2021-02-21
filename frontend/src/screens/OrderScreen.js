@@ -1,11 +1,13 @@
 import React, { useEffect, useState} from 'react'
 import axios from "axios"
 import { useDispatch, useSelector } from "react-redux"
+import { PayPalButton } from "react-paypal-button-v2"
 import { Row, Col, ListGroup, Image, Card} from "react-bootstrap"
 import Message  from "../components/Message"
 import Spinnner from "../components/Spinner"
 import { Link } from 'react-router-dom'
-import { getOrderDetails } from "../actions/orderActions"
+import { payOrder, getOrderDetails } from "../actions/orderActions"
+import { ORDER_PAY_RESET } from "../constants/orderConstants"
 
 const OrderScreen = ({match}) => {
     const dispatch = useDispatch()
@@ -52,6 +54,13 @@ const OrderScreen = ({match}) => {
         // If the order gets paid, the order gets reloaded 
         // After the reload the order comes back paid
         if (!order || order._id !== orderId || successPay) {
+            
+            // This reset removes a never ending loop once 
+            // we pay for the order
+            dispatch({
+                type: ORDER_PAY_RESET
+            })
+
             dispatch(getOrderDetails(orderId))
         } 
         else if (!order.isPaid) {
@@ -66,6 +75,10 @@ const OrderScreen = ({match}) => {
        }
     }, [dispatch, order, orderId, successPay])
 
+    const successPaymentHandler = (paymemtResult) => {
+        console.log(paymemtResult)
+        dispatch(payOrder(orderId, paymemtResult))
+    }
 
     return loading ? <Spinnner /> : error ? <Message>{error}</Message>  : <>
         <h1>Order: {orderId}</h1>
@@ -155,6 +168,14 @@ const OrderScreen = ({match}) => {
                                 <Col>R {order.totalPrice}</Col>
                             </Row>
                             </ListGroup.Item>
+                            {!order.isPaid && (
+                                <ListGroup.Item>
+                                    {loadingPay && <Spinnner />}
+                                    {!sdkReady ? <Spinnner /> : (
+                                        <PayPalButton amount={order.totalPrice} onSuccess={successPaymentHandler}/>
+                                    )}
+                                </ListGroup.Item>
+                            )}
                         </ListGroup>
                     </Card>
                 </Col>
