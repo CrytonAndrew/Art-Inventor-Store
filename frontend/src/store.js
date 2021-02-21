@@ -27,7 +27,8 @@ import {
 // Orders reducers
 import {
     orderCreateReducer,
-    orderDetailsReducer
+    orderDetailsReducer,
+    orderPayReducer,
 } from "./reducers/orderReducers"
 
 // All reducers
@@ -40,7 +41,8 @@ const reducer = combineReducers({
     userDetails: userDetailsReducer,
     userUpdateProfile: userUpdateProfileReducer,
     orderCreate: orderCreateReducer,
-    orderDetails: orderDetailsReducer
+    orderDetails: orderDetailsReducer,
+    orderPay: orderPayReducer
 }) 
 
 // Getting the items from storage
