@@ -88,10 +88,12 @@ export const register = (name, email, password) => async (dispatch) => {
 }
 
 export const logout = () => (dispatch) => {
-    localStorage.removeItem('userInfo') // Clear all userInfo
-    dispatch({
-        type: USER_LOGOUT
-    })
+    localStorage.removeItem('userInfo')
+    localStorage.removeItem('cartItems')
+    localStorage.removeItem('shippingAddress')
+    localStorage.removeItem('paymentMethod')
+    dispatch({ type: USER_LOGOUT })
+    document.location.href = '/login'
 }
 
 // We need to pass in token

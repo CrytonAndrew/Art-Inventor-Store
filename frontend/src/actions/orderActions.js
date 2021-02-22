@@ -13,6 +13,7 @@ import {
     ORDER_PAY_REQUEST,
     ORDER_PAY_SUCCESS,
 } from "../constants/orderConstants"
+import {logout} from "./userActions"
 
 export const createOrder = (order) => async(dispatch, useState) => {
     try {
@@ -111,37 +112,41 @@ export const payOrder = (id, paymentResult) => async(dispatch, useState) => {
     }
 }
 
-
-
-export const getMyOrdes = () => async(dispatch, useState) => {
+export const listMyOrders = () => async (dispatch, getState) => {
     try {
-        dispatch({
-            type: ORDER_LIST_MY_REQUEST
-        })
-    
-        const {userLogin: {userInfo} } = useState()
-
-        const config = {
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${userInfo.token}`
-            }
-        }
-    
-        const { data } = await axios.put(`/api/orders/myorders` ,config)
-    
-        dispatch({
-            type: ORDER_LIST_MY_SUCCESS,
-            payload: data
-        })
+      dispatch({
+        type: ORDER_LIST_MY_REQUEST,
+      })
+  
+      const {
+        userLogin: { userInfo },
+      } = getState()
+  
+      const config = {
+        headers: {
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      }
+  
+      const { data } = await axios.get(`/api/orders/myorders`, config)
+  
+      dispatch({
+        type: ORDER_LIST_MY_SUCCESS,
+        payload: data,
+      })
     } catch (error) {
-        dispatch({
-            type: ORDER_LIST_MY_FAIL,
-            payload: error.response && error.response.data.message 
-            ? error.response.data.message 
-            : error.message
-        })
+      const message =
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message
+      if (message === 'Not authorized, token failed') {
+        dispatch(logout())
+      }
+      dispatch({
+        type: ORDER_LIST_MY_FAIL,
+        payload: message,
+      })
     }
-}
-
+  }
+  
 
