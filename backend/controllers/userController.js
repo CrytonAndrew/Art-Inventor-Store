@@ -151,4 +151,57 @@ const deleteUser = asyncHandler(async (req, res) => {
 })
 
 
-export { authUser, getUserProfile, registerUser, updateUserProfile, getUsers, deleteUser}
+// @desc    Get user by id
+// @route   GET /api/users/:id
+// @access  Private/Admin
+const getUserById = asyncHandler(async (req, res) => {
+    // get the user
+    const user = await User.findById(req.params.id).select("-password") 
+    if (user) {
+        res.json(user)
+    }
+    else {
+        res.status(404)
+        throw new Error("User not found")
+    }
+})
+
+
+// @desc    Update user
+// @route   PUT /api/users/:id
+// @access  Private/Admin
+const updateUser = asyncHandler(async(req, res) => {
+    // Get currently logged in user details -> These details are due to the authorization takes place
+    // The was first assigned a token, the token is then used to authorize the user for accessing private routes
+    const user = await User.findById(req.params.id)
+
+    // Sending back the information of the currently logged in user
+    if (user) {
+        user.name = req.body.name  || user.name
+        user.email = req.body.email || user.email
+        user.isAdmin = req.body.isAdmin
+        const updatedUser = await user.save()
+
+        res.json({
+            _id: updatedUser._id,
+            name: updatedUser.name,
+            email: updatedUser.email,
+            isAdmin: updatedUser.isAdmin,
+        })
+    } else {
+        res.status(404)
+        throw new Error("User not found")
+    }
+})
+
+
+export { 
+    authUser, 
+    getUserProfile, 
+    registerUser, 
+    updateUserProfile, 
+    getUsers, 
+    deleteUser,
+    updateUser,
+    getUserById
+}
