@@ -20,7 +20,7 @@ import {
     USER_LIST_RESET,
     USER_REMOVE_REQUEST,
     USER_REMOVE_SUCCESS,
-    USER_REMOVE_FAIL
+    USER_REMOVE_FAIL,
 } from "../constants/userConstants"
 
 

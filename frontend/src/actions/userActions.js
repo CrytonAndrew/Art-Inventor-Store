@@ -223,11 +223,10 @@ export const deleteUser = (id) => async(dispatch, useState) => {
             }
         }
 
-        const { data } = await axios.delete(`/api/users/${id}`, config)
+        await axios.delete(`/api/users/${id}`, config)
 
         dispatch({
             type: USER_REMOVE_SUCCESS,
-            payload: data
         })
     } catch (error) {
         dispatch({
@@ -238,3 +237,4 @@ export const deleteUser = (id) => async(dispatch, useState) => {
         })
     }
 }
+
