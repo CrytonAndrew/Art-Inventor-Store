@@ -4,18 +4,26 @@ import {
     getUserProfile, 
     registerUser, 
     updateUserProfile,
-    getUsers
+    getUsers,
+    deleteUser
 } from "../controllers/userController.js";
 import { protect, admin } from "../middleware/authMiddleware.js"
 
 const router = express.Router()
 
+// Register new user
 router.route("/").post(registerUser)
 
+// Get all users
 router.route("/").get(protect, admin, getUsers)
 
+// Remove user
+router.route("/:id").delete(protect, admin, deleteUser)
+
+// Login 
 router.route("/login").post(authUser)
 
+// Get user info, Update user profile
 router.route("/profile")
     .get(protect, getUserProfile)
     .put(protect, updateUserProfile)
