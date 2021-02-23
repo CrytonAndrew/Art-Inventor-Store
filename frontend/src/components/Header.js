@@ -27,15 +27,19 @@ const Header = () => {
                 <Nav className="ml-auto py-3">
                 <LinkContainer to="/cart"><Nav.Link><i className="fas fa-shopping-cart"></i> Cart</Nav.Link></LinkContainer>
                 {userInfo && <LinkContainer to="/orders"><Nav.Link ><i className="fas fa-receipt"></i> Orders</Nav.Link></LinkContainer>}
-                {userInfo && userInfo.isAdmin && <LinkContainer to="/admin/users"><Nav.Link ><i className="fas fa-users"></i> Users</Nav.Link></LinkContainer>}
+                
                 {userInfo 
                 ? <NavDropdown title={userInfo.name} id="basic-nav-dropdown">
-                    <LinkContainer to="/profile"><NavDropdown.Item >My Account</NavDropdown.Item></LinkContainer>
+                    <LinkContainer to="/profile"><NavDropdown.Item ><i className="fas fa-user"></i> My Account</NavDropdown.Item></LinkContainer>
+                    <NavDropdown.Divider />
+                    {userInfo && userInfo.isAdmin && <LinkContainer to="/admin/users"><NavDropdown.Item ><i className="fas fa-users"></i> Users</NavDropdown.Item></LinkContainer>}
+                    <NavDropdown.Divider />
+                    {userInfo && userInfo.isAdmin && <LinkContainer to="/admin/products"><NavDropdown.Item ><i className="fas fa-tshirt"></i> Products</NavDropdown.Item></LinkContainer>}
                     <NavDropdown.Divider />
                     <LinkContainer to="/help"><NavDropdown.Item>Help</NavDropdown.Item></LinkContainer>
                     <NavDropdown.Divider />
                     <NavDropdown.Item onClick={logoutHandler}>Log Out</NavDropdown.Item>
-                </NavDropdown>
+                    </NavDropdown>
                 : <LinkContainer to="/login"><Button variant="outline-info">Sign In</Button></LinkContainer>
                 }
                 </Nav>
