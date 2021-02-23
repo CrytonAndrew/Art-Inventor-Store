@@ -4,7 +4,7 @@ import { Table, Button } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import Spinner from '../components/Spinner'
-import { listUsers } from '../actions/userActions'
+import { listUsers, deleteUser} from '../actions/userActions'
 
 const UserListScreen = ({ history }) => {
   const dispatch = useDispatch()
@@ -17,24 +17,27 @@ const UserListScreen = ({ history }) => {
 
   // const userDelete = useSelector((state) => state.userDelete)
   // const { success: successDelete } = userDelete
+  const userDelete = useSelector(state => state.userDelete)
+  const {success: successDelete} = userDelete  
 
   useEffect(() => {
-    if (userInfo && userInfo.isAdmin) {
+    if (userInfo && userInfo.isAdmin || successDelete) {
       dispatch(listUsers())
     } else {
       history.push('/login')
     }
-  }, [dispatch, history, userInfo])
+  }, [dispatch, history, successDelete , userInfo])
 
   const deleteHandler = (id) => {
     if (window.confirm('Are you sure')) {
-      // Delete
+      dispatch(deleteUser(id))
     }
   }
 
   return (
     <>
       <h1>Users</h1>
+      {successDelete && <Message variant="info">A user was deleted</Message>}
       {loading ? (
         <Spinner />
       ) : error ? (
