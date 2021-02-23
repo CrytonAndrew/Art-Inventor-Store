@@ -5,6 +5,7 @@ import {
     USER_DETAILS_SUCCESS,
     USER_LIST_FAIL,
     USER_LIST_REQUEST,
+    USER_LIST_RESET,
     USER_LIST_SUCCESS,
     USER_LOGIN_FAIL, 
     USER_LOGIN_REQUEST, 
@@ -93,6 +94,7 @@ export const register = (name, email, password) => async (dispatch) => {
 }
 
 export const logout = () => (dispatch) => {
+    document.location.href = '/login'
     localStorage.removeItem('userInfo')
     localStorage.removeItem('cartItems')
     localStorage.removeItem('shippingAddress')
@@ -100,7 +102,7 @@ export const logout = () => (dispatch) => {
     dispatch({ type: USER_LOGOUT })
     dispatch({ type: USER_DETAILS_RESET })
     dispatch({ type: ORDER_LIST_MY_RESET })
-    document.location.href = '/login'
+    dispatch({ type: USER_LIST_RESET })
 }
 
 // We need to pass in token
@@ -177,7 +179,7 @@ export const updateUserProfile = (user) => async(dispatch, useState) => {
     }
 }
 
-export const getUsersList = () => async(dispatch, useState) => {
+export const listUsers = () => async(dispatch, useState) => {
     try {
         dispatch({ type: USER_LIST_REQUEST })
 

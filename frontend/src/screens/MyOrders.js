@@ -4,37 +4,23 @@ import { LinkContainer } from 'react-router-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import Spinner from '../components/Spinner'
-import { getUserDetails} from '../actions/userActions'
 import { listMyOrders } from '../actions/orderActions'
-import { USER_UPDATE_PROFILE_RESET } from '../constants/userConstants'
 
-const MyOrders = ({ location, history }) => {
+const MyOrders = () => {
 
   const dispatch = useDispatch()
 
-  const userDetails = useSelector((state) => state.userDetails)
-  const { user } = userDetails
-
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin
-
-  const userUpdateProfile = useSelector((state) => state.userUpdateProfile)
-  const { success } = userUpdateProfile
 
   const orderListMy = useSelector((state) => state.orderListMy)
   const { loading: loadingOrders, error: errorOrders, orders } = orderListMy
 
   useEffect(() => {
-    if (!userInfo) {
-      history.push('/login')
-    } else {
-      if (!user || !user.name || success) {
-        dispatch({ type: USER_UPDATE_PROFILE_RESET })
-        dispatch(getUserDetails('profile'))
-        dispatch(listMyOrders())
-      }
+    if (userInfo) {
+      dispatch(listMyOrders())
     }
-  }, [dispatch, history, userInfo, user, success])
+  }, [dispatch, userInfo ])
 
   return (
     <Row>
