@@ -5,8 +5,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import Spinner from '../components/Spinner'
 import FormContainer from '../components/FormContainer'
-import { getUserDetails} from '../actions/userActions'
-// import { USER_UPDATE_RESET } from '../constants/userConstants'
+import { getUserDetails, updateUser} from '../actions/userActions'
+import { USER_UPDATE_RESET } from '../constants/userConstants'
 
 const UserEditScreen = ({ match, history }) => {
   const userId = match.params.id
@@ -20,37 +20,43 @@ const UserEditScreen = ({ match, history }) => {
   const userDetails = useSelector((state) => state.userDetails)
   const { loading, error, user } = userDetails
 
-//   const userUpdate = useSelector((state) => state.userUpdate)
-//   const {
-//     loading: loadingUpdate,
-//     error: errorUpdate,
-//     success: successUpdate,
-//   } = userUpdate
+  const userUpdate = useSelector((state) => state.userUpdate)
+  const {
+    loading: loadingUpdate,
+    error: errorUpdate,
+    success: successUpdate,
+  } = userUpdate
 
   useEffect(() => {
-      if (!user.name || user._id !== userId) {
-        dispatch(getUserDetails(userId))
-      } else {
-        setName(user.name)
-        setEmail(user.email)
-        setIsAdmin(user.isAdmin)
+      if (successUpdate){
+          dispatch({type: USER_UPDATE_RESET})
+          history.push("/admin/users")
       }
-  }, [dispatch, history, userId, user])
+      else {
+        if (!user.name || user._id !== userId) {
+            dispatch(getUserDetails(userId))
+        } else {
+            setName(user.name)
+            setEmail(user.email)
+            setIsAdmin(user.isAdmin)
+        }
+      }
+  }, [dispatch, history, userId, user, successUpdate])
 
   const submitHandler = (e) => {
     e.preventDefault()
-    // dispatch(updateUser({ _id: userId, name, email, isAdmin }))
+    dispatch(updateUser({ _id: userId, name, email, isAdmin }))
   }
 
   return (
     <>
-      <Link to='/admin/users' className='btn btn-light my-3'>
+      <Link to='/admin/users' className='btn btn-info my-3'>
         Go Back
       </Link>
       <FormContainer>
         <h1>Edit User</h1>
-        {/* {loadingUpdate && <Spinner />}
-        {errorUpdate && <Message variant='danger'>{errorUpdate}</Message>} */}
+        {loadingUpdate && <Spinner />}
+        {errorUpdate && <Message variant='danger'>{errorUpdate}</Message>}
         {loading ? (
           <Spinner />
         ) : error ? (
