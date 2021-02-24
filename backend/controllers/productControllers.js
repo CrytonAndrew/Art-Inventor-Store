@@ -32,7 +32,11 @@ const deleteProduct = asyncHandler(async(req, res) => {
     const product = await Product.findById(req.params.id)
 
     if (product) {
-        product.delete()
+        // All admins can delete products
+        // If i wanted admins who created the product to be the ones who delete the product
+        // I would add a check here
+        // if (req.user._id === product.user._id)
+        await product.delete()
         res.json({message: "Product successfully deleted"})
     }
     else {
