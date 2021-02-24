@@ -79,11 +79,12 @@ export const deleteProduct = (id) => async(dispatch, useState) => {
                 Authorization: `Bearer ${userInfo.token}`
             }
         }
-        const {data} = await axios.delete(`/api/products/${id}`, config)
+        
+        await axios.delete(`/api/products/${id}`, config)
 
+        // We are not getting anything back from our backend
         dispatch({
-            type: PRODUCT_DELETE_SUCCESS,
-            payload: data
+            type: PRODUCT_DELETE_SUCCESS
         })
 
     } catch (error) {

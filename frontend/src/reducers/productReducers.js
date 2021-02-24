@@ -43,7 +43,7 @@ export const productDetailsReducer = (state = {product: {reviews:[]}}, action) =
 
 
 // Single product reducer
-export const productDeleteReducer = (state = { product: {reviews: []}}, action) => {
+export const productDeleteReducer = (state = {}, action) => {
     switch (action.type) {
         case PRODUCT_DELETE_REQUEST:
             return {
