@@ -15,13 +15,13 @@ import {
 } from "../constants/orderConstants"
 import {logout} from "./userActions"
 
-export const createOrder = (order) => async(dispatch, useState) => {
+export const createOrder = (order) => async(dispatch, getState) => {
     try {
         dispatch({
             type: ORDER_CREATE_REQUEST
         })
     
-        const {userLogin: {userInfo} } = useState()
+        const {userLogin: {userInfo} } = getState()
     
     
         const config = {
@@ -48,13 +48,13 @@ export const createOrder = (order) => async(dispatch, useState) => {
 }
 
 
-export const getOrderDetails = (id) => async(dispatch, useState) => {
+export const getOrderDetails = (id) => async(dispatch, getState) => {
     try {
         dispatch({
             type: ORDER_DETAILS_REQUEST
         })
     
-        const {userLogin: {userInfo} } = useState()
+        const {userLogin: {userInfo} } = getState()
 
         const config = {
             headers: {
@@ -81,13 +81,13 @@ export const getOrderDetails = (id) => async(dispatch, useState) => {
 
 
 
-export const payOrder = (id, paymentResult) => async(dispatch, useState) => {
+export const payOrder = (id, paymentResult) => async(dispatch, getState) => {
     try {
         dispatch({
             type: ORDER_PAY_REQUEST
         })
     
-        const {userLogin: {userInfo} } = useState()
+        const {userLogin: {userInfo} } = getState()
 
         const config = {
             headers: {

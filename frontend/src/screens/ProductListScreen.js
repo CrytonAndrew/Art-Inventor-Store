@@ -7,7 +7,10 @@ import Spinner from '../components/Spinner'
 import {
   listProducts,
   deleteProduct,
+  createProduct,
 } from '../actions/productActions'
+
+import { PRODUCT_CREATE_RESET } from "../constants/productConstants"
 
 const ProductListScreen = ({ history, match }) => {
 
@@ -19,20 +22,35 @@ const ProductListScreen = ({ history, match }) => {
   const productDelete = useSelector((state) => state.productDelete)
   const { loading: loadingDelete, error: errorDelete, success: successDelete } = productDelete
 
+  const productCreate = useSelector((state) => state.productCreate)
+  const { 
+    loading: loadingCreate, 
+    success: successCreate, 
+    error: errorCreate, 
+    product: productCreated
+  } = productCreate
+
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin
 
   useEffect(() => {
-    // dispatch({ type: PRODUCT_CREATE_RESET })
-    if (!userInfo || !userInfo.isAdmin) {
-      history.push('/login')
+    if (successCreate) {
+      dispatch({ type: PRODUCT_CREATE_RESET }) 
+      history.push(`/admin/product/${productCreated._id}/edit`)
     }
-    dispatch(listProducts())
+    else {
+      if (!userInfo || !userInfo.isAdmin) {
+        history.push('/login')
+      }
+      dispatch(listProducts())
+    }
   }, [
     dispatch,
     history,
     userInfo,
     successDelete,
+    successCreate,
+    productCreated
   ])
 
   const deleteHandler = (id) => {
@@ -42,7 +60,7 @@ const ProductListScreen = ({ history, match }) => {
   }
 
   const createProductHandler = () => {
-  
+    dispatch(createProduct())
   }
 
   return (
@@ -50,6 +68,8 @@ const ProductListScreen = ({ history, match }) => {
       <Row className='align-items-center'>
         <Col>
           <h1>Products</h1>
+          {errorCreate && <Message variant="danger">{errorCreate}</Message>}
+          {loadingCreate && <Spinner/>}
         </Col>
         <Col className='text-right'>
           <Button className='my-3' onClick={createProductHandler}>
@@ -72,7 +92,6 @@ const ProductListScreen = ({ history, match }) => {
                 <th>NAME</th>
                 <th>PRICE</th>
                 <th>CATEGORY</th>
-                <th>BRAND</th>
                 <th></th>
               </tr>
             </thead>
@@ -81,9 +100,8 @@ const ProductListScreen = ({ history, match }) => {
                 <tr key={product._id}>
                   <td>{product._id}</td>
                   <td>{product.name}</td>
-                  <td>${product.price}</td>
+                  <td>R {product.price}</td>
                   <td>{product.category}</td>
-                  <td>{product.brand}</td>
                   <td>
                     <LinkContainer to={`/admin/product/${product._id}/edit`}>
                       <Button variant='light' className='btn-sm'>

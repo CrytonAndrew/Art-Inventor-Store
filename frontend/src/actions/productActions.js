@@ -10,6 +10,12 @@ import {
     PRODUCT_DELETE_FAIL,
     PRODUCT_DELETE_SUCCESS,
     PRODUCT_DELETE_REQUEST,
+    PRODUCT_CREATE_REQUEST,
+    PRODUCT_CREATE_SUCCESS,
+    PRODUCT_CREATE_FAIL,
+    PRODUCT_UPDATE_REQUEST,
+    PRODUCT_UPDATE_SUCCESS,
+    PRODUCT_UPDATE_FAIL,
 } from "../constants/productConstants"
 
 
@@ -68,11 +74,11 @@ export const getProductDetails = (id) => async(dispatch) => {
 }
 
 
-export const deleteProduct = (id) => async(dispatch, useState) => {
+export const deleteProduct = (id) => async(dispatch, getState) => {
     try {
         dispatch({type: PRODUCT_DELETE_REQUEST})
 
-        const {userLogin: { userInfo }} = useState()
+        const {userLogin: { userInfo }} = getState()
 
         const config = {
             headers: {
@@ -96,5 +102,78 @@ export const deleteProduct = (id) => async(dispatch, useState) => {
         })
     }
 }
+
+
+
+export const createProduct = () => async(dispatch, getState) => {
+    try {
+        dispatch({ type: PRODUCT_CREATE_REQUEST })
+
+        const { userLogin: { userInfo } } = getState()
+        console.log(userInfo.token)
+        
+        const config = {
+            headers: {
+                Authorization: `Bearer ${userInfo.token}`
+            }
+        }
+        
+        // Everytime I make a post request I'm supposed to add a second arguement 
+        // with the data I am sending
+        // Sendig an object is also allowed to fill up the parameter for a post request
+        const { data } = await axios.post(`/api/products`, {} ,config)
+
+        // We are not getting anything back from our backend
+        dispatch({
+            type: PRODUCT_CREATE_SUCCESS,
+            payload: data
+        })
+
+    } catch (error) {
+        dispatch({
+            type: PRODUCT_CREATE_FAIL, 
+            payload: error.response && error.response.data.message 
+            ? error.response.data.message 
+            : error.message
+        })
+    }
+}
+
+
+export const updateProduct = (product) => async(dispatch, getState) => {
+    try {
+        dispatch({ type: PRODUCT_UPDATE_REQUEST })
+
+        const { userLogin: { userInfo } } = getState()
+        console.log(userInfo.token)
+        
+        const config = {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${userInfo.token}`
+            }
+        }
+        
+        // Everytime I make a post request I'm supposed to add a second arguement 
+        // with the data I am sending
+        // Sendig an object is also allowed to fill up the parameter for a post request
+        const { data } = await axios.put(`/api/products/${product._id}`, product ,config)
+
+        // We are not getting anything back from our backend
+        dispatch({
+            type: PRODUCT_UPDATE_SUCCESS,
+            payload: data
+        })
+
+    } catch (error) {
+        dispatch({
+            type: PRODUCT_UPDATE_FAIL, 
+            payload: error.response && error.response.data.message 
+            ? error.response.data.message 
+            : error.message
+        })
+    }
+}
+
 
 
