@@ -12,10 +12,16 @@ const ProductScreen = ({match, history}) => {
     // Setting the quantity state -> Qty is a component level state
     const [qty, setQty] = useState(1)
 
+    const [rating, setRating] = useState(0)
+    const [comment, setComment] = useState("")
+
     const dispatch = useDispatch()
 
     const productDetails = useSelector(state => state.productDetails)
     const {loading, error, product} = productDetails
+
+    const userLogin = useSelector(state => state.userLogin)
+    const { userInfo } = userLogin
     
 
     useEffect(() => {
@@ -27,12 +33,18 @@ const ProductScreen = ({match, history}) => {
         history.push(`/cart/${match.params.id}?qty=${qty}`)
     }
 
+    const submitReviewHandler = () => {
+
+    }
+
     return <>
         <Link className="btn btn-info my-3 rounded" to="/">
             Home Page
         </Link>
-        {loading ? <Spinner /> : error ? <Message variant="danger" header="Oops! Something went wrong" message={error}/> : <Row>
-            <Col md={6}>
+        {loading ? <Spinner /> : error ? <Message variant="danger">{error}</Message> : 
+        <>
+        <Row>
+            <Col md={5}>
                 <Image className="product_screen_image" src={product.image} alt={product.name} rounded fluid/>
             </Col>
             <Col md={3}>
@@ -113,7 +125,43 @@ const ProductScreen = ({match, history}) => {
                     </ListGroup>
                 </Card>
             </Col>
-        </Row>}
+        </Row>
+        <Row>
+            <Col>
+            <h1>Review Product</h1>
+                {userInfo 
+                ? <Form onSubmit={submitReviewHandler}>
+                    <Form.Group controlId="rating">
+                        <Form.Label>Choose Rating:</Form.Label>
+                        <Form.Control as="select">
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                        </Form.Control>
+                    </Form.Group>
+
+                    <Form.Group controlId="comment">
+                        <Form.Label>Comment:</Form.Label>
+                        <Form.Control as="textarea" rows={3} />
+                    </Form.Group>
+
+                    <Button type="submit" variant="primary" className="btn">
+                        Add Review
+                    </Button>
+                </Form>
+                : <Message variant="info">
+                    In order to write a review you should be signed in. Go here to <Link to="/login">Sign In</Link>
+                </Message>
+                }
+            </Col>
+            <Col>
+                {/* Rating so far showing icons -> Highligt the state of the product from poor to good */}
+            </Col>
+        </Row>
+        </>
+        }
     </>
     
 }
