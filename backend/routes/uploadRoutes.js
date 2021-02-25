@@ -21,7 +21,7 @@ const storage = multer.diskStorage({
 // We only want images to be uploaded
 function checkFileType(file, cb) {
     // The file types we wang for our images 
-    const filetypes = /jpg|jpeg|png|JPG/ 
+    const filetypes = /jpg|jpeg|png/ 
     // Getting the extension from a file 
     const extname = filetypes.test(path.extname(file.originalname).toLowerCase())
     // Check the file mimetype 

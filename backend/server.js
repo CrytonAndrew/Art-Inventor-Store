@@ -8,7 +8,7 @@ import {notFound, errorHandler} from "./middleware/errorMiddleware.js"
 import productRoutes from "./routes/productRoutes.js"
 import userRoutes from "./routes/userRoutes.js"
 import orderRoutes from "./routes/orderRoutes.js"
-import uploadRoutes from "./routes/uploadRoutes"
+import uploadRoutes from "./routes/uploadRoutes.js"
 
 
 dotenv.config()
@@ -33,7 +33,6 @@ app.use("/api/users", userRoutes)
 // Pointing to the orderRoutes
 app.use("/api/orders", orderRoutes)
 
-
 //Uploading images
 app.use("/api/upload", uploadRoutes)
 
@@ -43,7 +42,7 @@ app.get("/api/config/paypal", (req, res) => res.send(process.env.PAYPAL_CLIENT_I
 
 // Making the folder static since its not accessible by default
 const __dirname = path.resolve() // dirname is only avaible when we commonJs, but since we are using es modules
-app.use(("/uplaods", express.static(path.join(__dirname, "/uploads"))))
+app.use("/uploads", express.static(path.join(__dirname, "/uploads")))
 
 // Error Middleware
 app.use(notFound)

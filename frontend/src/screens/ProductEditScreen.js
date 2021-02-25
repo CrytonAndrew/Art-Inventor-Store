@@ -1,6 +1,7 @@
 import React, { useEffect, useState} from 'react'
 import {useDispatch, useSelector} from "react-redux"
 import { Form, Button } from "react-bootstrap"
+import axios from "axios" // Using it for uploading images
 import Spinner from "../components/Spinner"
 import Message from "../components/Message"
 import { getProductDetails, updateProduct } from "../actions/productActions"
@@ -15,6 +16,8 @@ const ProductEditScreen = ({match, history}) => {
     const [image, setImage] = useState("")
     const [countInStock, setCountInStock] = useState(0)
     const [price, setPrice] = useState(0)
+
+    const [uploading, setUploading] = useState(false)
 
 
     const dispatch = useDispatch()
@@ -51,6 +54,32 @@ const ProductEditScreen = ({match, history}) => {
             }
         }
     }, [dispatch, history, userInfo, productId, product, succcessUpdate])
+
+    const uploadFileHandler = async (e) => {
+        const file = e.target.files[0] // getting the first file in the array
+        const formData = new FormData()
+        formData.append('image', file)
+        setUploading(true)
+
+        try {
+            const config = {
+                headers: {
+                    "Content-Type": "mutlipart/form-data"
+                }
+            }
+
+            const { data } = await axios.post('/api/upload', formData, config) 
+
+            console.log(data)
+            
+            setImage(data)
+            setUploading(false)
+        } catch (error) {  
+            console.log(error)
+            setUploading(false)
+        }
+    }
+
 
     const submitHandler = (e) => {
         e.preventDefault()
@@ -106,13 +135,20 @@ const ProductEditScreen = ({match, history}) => {
                     </Form.Group>
 
                     <Form.Group controlId='image'>
-                        <Form.Label>Product Image</Form.Label>
-                        <Form.Control
-                            type='text'
-                            placeholder='Product Image'
-                            value={image}
-                            onChange={(e) => setImage(e.target.value)}
-                        ></Form.Control>
+                    <Form.Label>Image</Form.Label>
+                    <Form.Control
+                        type='text'
+                        placeholder='Enter image url'
+                        value={image}
+                        onChange={(e) => setImage(e.target.value)}
+                    ></Form.Control>
+                    <Form.File
+                        id='image-file'
+                        label='Choose File'
+                        custom
+                        onChange={uploadFileHandler}
+                    ></Form.File>
+                    {uploading && <Spinner />}
                     </Form.Group>
 
                     <Form.Group controlId='countinstock'>
@@ -122,7 +158,8 @@ const ProductEditScreen = ({match, history}) => {
                             placeholder='Product CountInStock'
                             value={countInStock}
                             onChange={(e) => setCountInStock(e.target.value)}
-                        ></Form.Control>
+                        >
+                        </Form.Control>
                     </Form.Group>
 
                     <Button type='submit' variant='primary'>
