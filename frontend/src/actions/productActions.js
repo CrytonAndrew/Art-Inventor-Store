@@ -9,7 +9,7 @@ import {
     PRODUCT_DETAILS_SUCCESS,
     PRODUCT_DELETE_FAIL,
     PRODUCT_DELETE_SUCCESS,
-    PRODUCT_DELETE_REQUEST
+    PRODUCT_DELETE_REQUEST,
 } from "../constants/productConstants"
 
 
@@ -96,4 +96,5 @@ export const deleteProduct = (id) => async(dispatch, useState) => {
         })
     }
 }
+
 

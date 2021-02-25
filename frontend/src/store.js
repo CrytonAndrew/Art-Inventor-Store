@@ -20,7 +20,7 @@ import {
 import { 
     productListReducer,
     productDetailsReducer,
-    productDeleteReducer
+    productDeleteReducer,
  } from "./reducers/productReducers"
 
 // Cart Reducers

@@ -6,7 +6,7 @@ import Message from '../components/Message'
 import Spinner from '../components/Spinner'
 import {
   listProducts,
-  deleteProduct
+  deleteProduct,
 } from '../actions/productActions'
 
 const ProductListScreen = ({ history, match }) => {
@@ -42,7 +42,7 @@ const ProductListScreen = ({ history, match }) => {
   }
 
   const createProductHandler = () => {
-
+  
   }
 
   return (
