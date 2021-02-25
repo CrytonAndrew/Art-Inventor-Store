@@ -35,6 +35,9 @@ const ProductEditScreen = ({match, history}) => {
             history.push("/admin/products")
         }
         else {
+            if (!userInfo.isAdmin) {
+                history.push("/login")
+            }
             if (!product || product._id !== productId) {
                 dispatch(getProductDetails(productId))
             }
