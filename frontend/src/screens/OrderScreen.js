@@ -2,7 +2,7 @@ import React, { useEffect, useState} from 'react'
 import axios from "axios"
 import { useDispatch, useSelector } from "react-redux"
 import { PayPalButton } from "react-paypal-button-v2"
-import { Row, Col, ListGroup, Image, Card} from "react-bootstrap"
+import { Row, Col, ListGroup, Image, Card, Button} from "react-bootstrap"
 import Message  from "../components/Message"
 import Spinnner from "../components/Spinner"
 import { Link } from 'react-router-dom'
@@ -16,6 +16,8 @@ const OrderScreen = ({match}) => {
 
     const orderId = match.params.id
 
+    const userLogin = useSelector(state => state.userLogin)
+    const { userInfo } = userLogin
 
     const orderDetails = useSelector(state => state.orderDetails)
     const {error, loading, order} = orderDetails
@@ -76,7 +78,6 @@ const OrderScreen = ({match}) => {
     }, [dispatch, order, orderId, successPay])
 
     const successPaymentHandler = (paymemtResult) => {
-        console.log(paymemtResult)
         dispatch(payOrder(orderId, paymemtResult))
     }
 
@@ -176,6 +177,9 @@ const OrderScreen = ({match}) => {
                                     )}
                                 </ListGroup.Item>
                             )}
+                            {userInfo.isAdmin && <ListGroup.Item>
+                                <Button className="btn-block">Mark As Delivered</Button>
+                            </ListGroup.Item>}
                         </ListGroup>
                     </Card>
                 </Col>
