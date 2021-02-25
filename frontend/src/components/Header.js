@@ -6,6 +6,7 @@ import {Navbar, Nav, Button, Container, NavDropdown} from 'react-bootstrap'
 import {LinkContainer} from "react-router-bootstrap"
  import {logout} from "../actions/userActions"
 
+
 const Header = () => {
     // Used to call the logout action
     const dispatch = useDispatch()
@@ -26,8 +27,7 @@ const Header = () => {
                 <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="ml-auto py-3">
                 <LinkContainer to="/cart"><Nav.Link><i className="fas fa-shopping-cart"></i> Cart</Nav.Link></LinkContainer>
-                {userInfo && <LinkContainer to="/orders"><Nav.Link ><i className="fas fa-receipt"></i> Orders</Nav.Link></LinkContainer>}
-                
+                {userInfo.isAdmin ? <LinkContainer to="/admin/orders"><Nav.Link>Orders</Nav.Link></LinkContainer> : <LinkContainer to="/orders"><Nav.Link ><i className="fas fa-receipt"></i> Orders</Nav.Link></LinkContainer>}
                 {userInfo 
                 ? <NavDropdown title={userInfo.name} id="basic-nav-dropdown">
                     <LinkContainer to="/profile"><NavDropdown.Item ><i className="fas fa-user"></i> My Account</NavDropdown.Item></LinkContainer>
