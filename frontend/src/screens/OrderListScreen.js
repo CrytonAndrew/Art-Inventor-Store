@@ -43,6 +43,8 @@ const OrderListScreen = ({ history, match }) => {
                 <th>ID</th>
                 <th>PAID</th>
                 <th>DELIVERED</th>
+                <th>Paid Time</th>
+                <th>Delivery Time</th>
                 <th></th>
               </tr>
             </thead>
@@ -56,10 +58,12 @@ const OrderListScreen = ({ history, match }) => {
                   {order.isDelivered 
                     ? <td><i className="fas fa-check-circle" style={{color: "green"}}></i></td> 
                     : <td><i className="fas fa-check-circle" style={{color: "red"}}></i></td>}
+                  {order.isPaid ? <td style={{textAlign: "center"}}>{order.paidAt}</td> : <td style={{textAlign: "center"}}><i className="fas fa-minus"></i></td>}
+                  {order.isDelivered ? <td style={{textAlign: "center"}}>{order.deliveredAt}</td> : <td style={{textAlign: "center"}}><i className="fas fa-minus"></i></td>}
                   <td>
                     <LinkContainer to={`/order/${order._id}`}>
-                      <Button variant='light' className='btn-sm'>
-                        <i className='fas fa-edit'></i>
+                      <Button variant='info' className='btn'>
+                        Details
                       </Button>
                     </LinkContainer>
                   </td>

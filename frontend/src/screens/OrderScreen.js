@@ -2,12 +2,12 @@ import React, { useEffect, useState} from 'react'
 import axios from "axios"
 import { useDispatch, useSelector } from "react-redux"
 import { PayPalButton } from "react-paypal-button-v2"
-import { Row, Col, ListGroup, Image, Card, Button} from "react-bootstrap"
+import { Row, Col, ListGroup, Image, Card, Button, Spinner} from "react-bootstrap"
 import Message  from "../components/Message"
 import Spinnner from "../components/Spinner"
 import { Link } from 'react-router-dom'
-import { payOrder, getOrderDetails } from "../actions/orderActions"
-import { ORDER_PAY_RESET } from "../constants/orderConstants"
+import { payOrder, getOrderDetails, deliverOrder} from "../actions/orderActions"
+import { ORDER_PAY_RESET, ORDER_DELIVER_RESET} from "../constants/orderConstants"
 
 const OrderScreen = ({match}) => {
     const dispatch = useDispatch()
@@ -25,6 +25,8 @@ const OrderScreen = ({match}) => {
     const orderPay = useSelector(state => state.orderPay)
     const {loading: loadingPay, success: successPay} = orderPay
 
+    const orderDeliver = useSelector(state => state.orderDeliver)
+    const {loading: loadingDeliver, success: successDeliver, error: errorDeliver} = orderDeliver
 
     if (!loading) {
         const addDecimals = (num) => {
@@ -55,12 +57,16 @@ const OrderScreen = ({match}) => {
 
         // If the order gets paid, the order gets reloaded 
         // After the reload the order comes back paid
-        if (!order || order._id !== orderId || successPay) {
+        if (!order || order._id !== orderId || successPay || successDeliver) {
             
             // This reset removes a never ending loop once 
             // we pay for the order
             dispatch({
                 type: ORDER_PAY_RESET
+            })
+
+            dispatch({
+                type: ORDER_DELIVER_RESET
             })
 
             dispatch(getOrderDetails(orderId))
@@ -75,10 +81,14 @@ const OrderScreen = ({match}) => {
                setSdkReady(true)
             }
        }
-    }, [dispatch, order, orderId, successPay])
+    }, [dispatch, order, orderId, successPay, successDeliver])
 
     const successPaymentHandler = (paymemtResult) => {
         dispatch(payOrder(orderId, paymemtResult))
+    }
+
+    const deliverHandler = () => {
+        dispatch(deliverOrder(orderId))
     }
 
     return loading ? <Spinnner /> : error ? <Message>{error}</Message>  : <>
@@ -177,8 +187,10 @@ const OrderScreen = ({match}) => {
                                     )}
                                 </ListGroup.Item>
                             )}
-                            {userInfo.isAdmin && <ListGroup.Item>
-                                <Button className="btn-block">Mark As Delivered</Button>
+                            {loadingDeliver && <Spinner/>}
+                            {errorDeliver && <Message>{errorDeliver}</Message>}
+                            {!order.isDelivered && userInfo.isAdmin && <ListGroup.Item>
+                                <Button className="btn-block" onClick={deliverHandler}>Mark As Delivered</Button>
                             </ListGroup.Item>}
                         </ListGroup>
                     </Card>

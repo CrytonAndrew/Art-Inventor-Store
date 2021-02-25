@@ -37,6 +37,7 @@ import {
     orderPayReducer,
     orderListMyReducer,
     orderListReducer,
+    orderDeliverReducer,
 } from "./reducers/orderReducers"
 
 // All reducers
@@ -59,6 +60,7 @@ const reducer = combineReducers({
     orderPay: orderPayReducer,
     orderListMy: orderListMyReducer,
     orderList: orderListReducer,
+    orderDeliver: orderDeliverReducer,
 }) 
 
 // Getting the items from storage
