@@ -1,6 +1,7 @@
 import path from "path"
 import express from "express"
 import dotenv from "dotenv"
+import morgan from "morgan" // logger
 import colors from "colors"
 import connectDB from "./config/db.js"
 import {notFound, errorHandler} from "./middleware/errorMiddleware.js"
@@ -16,6 +17,10 @@ dotenv.config()
 connectDB() // Call the connect 
 
 const app = express()
+
+if (process.env.NODE_ENV === "development") {
+    app.use(morgan('dev'))
+}
 
 // A form of body parsing -> That allows us to access JSON body data
 app.use(express.json())

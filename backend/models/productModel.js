@@ -1,6 +1,11 @@
 import mongoose from "mongoose"
 
 const reviewSchema = mongoose.Schema({
+    user: { // Having a user associated with the product we are creating
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: 'User'
+    },
     name: {
         type: String,
         required: true
@@ -13,6 +18,7 @@ const reviewSchema = mongoose.Schema({
         type: String,
         required: true
     }
+    
 }, {
     timestamps: true
 })
