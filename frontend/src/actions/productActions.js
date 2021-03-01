@@ -16,6 +16,9 @@ import {
     PRODUCT_UPDATE_REQUEST,
     PRODUCT_UPDATE_SUCCESS,
     PRODUCT_UPDATE_FAIL,
+    PRODUCT_REVIEW_CREATE_REQUEST,
+    PRODUCT_REVIEW_CREATE_SUCCESS,
+    PRODUCT_REVIEW_CREATE_FAIL,
 } from "../constants/productConstants"
 
 
@@ -172,6 +175,42 @@ export const updateProduct = (product) => async(dispatch, getState) => {
         })
     }
 }
+
+
+
+export const createProductReview = (review, productId) => async(dispatch, getState) => {
+    try {
+        dispatch({ type: PRODUCT_REVIEW_CREATE_REQUEST })
+
+        const { userLogin: { userInfo } } = getState()
+        
+        const config = {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${userInfo.token}`
+            }
+        }
+        
+        // Everytime I make a post request I'm supposed to add a second arguement 
+        // with the data I am sending
+        // Sendig an object is also allowed to fill up the parameter for a post request
+        await axios.post(`/api/products/${productId}/reviews`, review ,config)
+
+        // We are not getting anything back from our backend
+        dispatch({
+            type: PRODUCT_REVIEW_CREATE_SUCCESS,
+        })
+
+    } catch (error) {
+        dispatch({
+            type: PRODUCT_REVIEW_CREATE_FAIL, 
+            payload: error.response && error.response.data.message 
+            ? error.response.data.message 
+            : error.message
+        })
+    }
+}
+
 
 
 

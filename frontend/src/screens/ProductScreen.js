@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from "react-redux"
 import {Link} from 'react-router-dom'
 import {Row, Col, Image, ListGroup, Card, Button, Form} from "react-bootstrap"
 import Rating from "../components/Rating"
-import {getProductDetails} from "../actions/productActions"
+import {getProductDetails, createProductReview} from "../actions/productActions"
 import Spinner from "../components/Spinner"
 import Message from "../components/Message"
 
@@ -22,6 +22,9 @@ const ProductScreen = ({match, history}) => {
 
     const userLogin = useSelector(state => state.userLogin)
     const { userInfo } = userLogin
+
+    const productReviewCreate = useSelector((state) => state.productReviewCreate)
+    const {error: errorReview, success: successReview} = productReviewCreate
     
 
     useEffect(() => {
@@ -33,8 +36,9 @@ const ProductScreen = ({match, history}) => {
         history.push(`/cart/${match.params.id}?qty=${qty}`)
     }
 
-    const submitReviewHandler = () => {
-
+    const submitReviewHandler = (e) => {
+        e.preventDefault()
+        dispatch(createProductReview({rating, comment}, product._id))
     }
 
     return <>
@@ -129,11 +133,13 @@ const ProductScreen = ({match, history}) => {
         <Row>
             <Col>
             <h1>Review Product</h1>
+            {errorReview && <Message variant="danger">{errorReview}</Message>}
+            {successReview && <Message variant="success">Successfully created new review</Message>}
                 {userInfo 
                 ? <Form onSubmit={submitReviewHandler}>
                     <Form.Group controlId="rating">
                         <Form.Label>Choose Rating:</Form.Label>
-                        <Form.Control as="select">
+                        <Form.Control as="select" onChange={(e) => setRating(e.target.value)}>
                         <option>1</option>
                         <option>2</option>
                         <option>3</option>
@@ -144,7 +150,7 @@ const ProductScreen = ({match, history}) => {
 
                     <Form.Group controlId="comment">
                         <Form.Label>Comment:</Form.Label>
-                        <Form.Control as="textarea" rows={3} />
+                        <Form.Control as="textarea" rows={3} onChange={(e) => setComment(e.target.value)}/>
                     </Form.Group>
 
                     <Button type="submit" variant="primary" className="btn">
