@@ -3,7 +3,8 @@ import {useDispatch, useSelector} from "react-redux"
 import {Link} from 'react-router-dom'
 import {Row, Col, Image, ListGroup, Card, Button, Form} from "react-bootstrap"
 import Rating from "../components/Rating"
-import {getProductDetails, createProductReview} from "../actions/productActions"
+import {getProductDetails, createProductReview, getProductReview} from "../actions/productActions"
+import { PRODUCT_REVIEW_CREATE_RESET } from "../constants/productConstants"
 import Spinner from "../components/Spinner"
 import Message from "../components/Message"
 
@@ -25,11 +26,18 @@ const ProductScreen = ({match, history}) => {
 
     const productReviewCreate = useSelector((state) => state.productReviewCreate)
     const {error: errorReview, success: successReview} = productReviewCreate
-    
+
+    const productReview = useSelector(state => state.productReview)
+    const {error: errorGetReviews, loading: loadingGetReview, product: productGetReviews} = productReview
+
 
     useEffect(() => {
-       dispatch(getProductDetails(match.params.id))
-    }, [match, dispatch])
+        if (successReview) {
+            dispatch({type: PRODUCT_REVIEW_CREATE_RESET})
+            dispatch(getProductReview(match.params.id))
+        }
+        dispatch(getProductDetails(match.params.id))
+    }, [match, dispatch, successReview])
 
     
     const addToCartHandler = () => {
@@ -66,6 +74,32 @@ const ProductScreen = ({match, history}) => {
                        {product.description}
                     </ListGroup.Item>
                 </ListGroup>
+
+                <h2>
+                    Reviews
+                </h2>
+                    {errorGetReviews && <Message>{errorGetReviews}</Message>}
+
+                    {loadingGetReview ? <Spinner/> : productGetReviews.map((review) => (
+                        <Row>
+                            <Row>
+                                <Col>
+                                    <Image src="images/sample.jpg" alt={`${review.name}`} />
+                                </Col>
+                                <Col>
+                                    <h4>{review.name}</h4>
+                                    <p>{review.comment}</p>
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col>
+                                    <Rating value={review.rating} text=" review"/>
+                                </Col>
+                            </Row>
+                        </Row>
+                       
+                    ))}
+                
             </Col>
             <Col md={3}>
                 <Card>
