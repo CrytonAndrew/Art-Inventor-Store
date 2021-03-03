@@ -32,7 +32,7 @@ const ProductScreen = ({match, history}) => {
             setRating(0)
             setComment("")
         }
-        if (!product._id && product._id  !== match.params.id){
+        if (!product._id || product._id  !== match.params.id){
             dispatch(getProductDetails(match.params.id))
             dispatch({type: PRODUCT_REVIEW_CREATE_RESET})
         }
