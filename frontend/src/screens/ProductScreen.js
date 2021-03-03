@@ -29,6 +29,7 @@ const ProductScreen = ({match, history}) => {
     const {error: errorReviewCreate, success: successReviewCreate, loading: loadingReviewCreate} = productReviewCreate
 
     useEffect(() => {
+      window.scrollTo(100, 0)
         if (successReviewCreate) {
             setRating(0)
             setComment("")

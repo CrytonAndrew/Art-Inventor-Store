@@ -31,7 +31,7 @@ const Header = () => {
                 <Route render={({history}) => <SearchBox history={history}/>} />
                 <Nav className="ml-auto py-3">
                 <LinkContainer to="/cart"><Nav.Link><i className="fas fa-shopping-cart"></i> Cart</Nav.Link></LinkContainer>
-                {/* {userInfo.isAdmin ? <LinkContainer to="/admin/orders"><Nav.Link>Orders</Nav.Link></LinkContainer> : <LinkContainer to="/orders"><Nav.Link ><i className="fas fa-receipt"></i> Orders</Nav.Link></LinkContainer>} */}
+                {userInfo && userInfo.isAdmin ? <LinkContainer to="/admin/orders"><Nav.Link>Orders</Nav.Link></LinkContainer> : <LinkContainer to="/orders"><Nav.Link ><i className="fas fa-receipt"></i> Orders</Nav.Link></LinkContainer>}
                 {userInfo 
                 ? <NavDropdown title={userInfo.name} id="basic-nav-dropdown">
                     <LinkContainer to="/profile"><NavDropdown.Item ><i className="fas fa-user"></i> My Account</NavDropdown.Item></LinkContainer>
