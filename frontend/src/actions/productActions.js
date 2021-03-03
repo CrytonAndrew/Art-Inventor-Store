@@ -19,6 +19,9 @@ import {
     PRODUCT_REVIEW_CREATE_REQUEST,
     PRODUCT_REVIEW_CREATE_SUCCESS,
     PRODUCT_REVIEW_CREATE_FAIL,
+    PRODUCT_TOP_RATED_REQUEST,
+    PRODUCT_TOP_RATED_SUCCESS,
+    PRODUCT_TOP_RATED_FAIL,
 } from "../constants/productConstants"
 
 
@@ -210,4 +213,32 @@ export const createProductReview = (review, productId) => async(dispatch, getSta
         })
     }
 }
+
+
+export const getTopRatedProducts = () => async(dispatch) => {
+    try {
+        dispatch({ type: PRODUCT_TOP_RATED_REQUEST })
+
+        // Everytime I make a post request I'm supposed to add a second arguement 
+        // with the data I am sending
+        // Sendig an object is also allowed to fill up the parameter for a post request
+        const {data} = await axios.get(`/api/products/top`)
+
+        // We are not getting anything back from our backend
+        dispatch({
+            type: PRODUCT_TOP_RATED_SUCCESS,
+            payload: data
+        })
+
+    } catch (error) {
+        dispatch({
+            type: PRODUCT_TOP_RATED_FAIL, 
+            payload: error.response && error.response.data.message 
+            ? error.response.data.message 
+            : error.message
+        })
+    }
+}
+
+
 

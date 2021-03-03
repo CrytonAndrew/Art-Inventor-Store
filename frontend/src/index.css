@@ -16,6 +16,35 @@ li {
   list-style-type: none;
   display: list-item;
 }
+
+/* Top products Carousel */
+.carousel-item-next,
+.carousel-item-prev,
+.carousel-item.active {
+  display: flex;
+}
+
+.carousel-caption {
+  position: absolute;
+}
+
+.carousel-caption h2 {
+  color: #fff;
+}
+
+.carosuel img {
+  height: 300px;
+  padding: 10px;
+  margin: 40px;
+  border-radius: 50%;
+}
+
+.carousel-img {
+  height: 500px;
+  width: 500px;
+  margin-left: 270px;
+}
+
 /* Product Screen  */
 .product_screen_image {
   max-width: 100%;

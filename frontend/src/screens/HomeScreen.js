@@ -8,6 +8,7 @@ import { listProducts } from "../actions/productActions"
 import Spinner from "../components/Spinner"
 import Message from "../components/Message"
 import Paginate from "../components/Paginate"
+import ProductCarousel from "../components/ProductCarousel"
 
 const HomeScreen = ({match}) => {
     const keyword = match.params.keyword
@@ -26,6 +27,7 @@ const HomeScreen = ({match}) => {
     
     return (
         <>
+        {!keyword && <ProductCarousel/>}
           <h1>Lastest Products</h1>
           {loading ? <Spinner/> 
           : error ? <Message variant="danger" header="Oops, Something Went Wrong" message={error}/> : 

@@ -46,7 +46,7 @@ const products = [
         category: "Sweaters",
         price: 350,
         countInStock: 20,
-        rating: 4.5,
+        rating: 5,
         numReviews: 12
     },
     {
@@ -56,7 +56,7 @@ const products = [
         category: "Sweaters",
         price: 350,
         countInStock: 20,
-        rating: 4.5,
+        rating: 5,
         numReviews: 12
     },
     {
@@ -66,7 +66,7 @@ const products = [
         category: "Hoodies",
         price: 399,
         countInStock: 20,
-        rating: 4.5,
+        rating: 5,
         numReviews: 12
     },
 ]

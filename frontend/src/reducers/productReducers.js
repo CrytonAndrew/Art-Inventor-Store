@@ -20,6 +20,9 @@ import {
     PRODUCT_REVIEW_CREATE_SUCCESS,
     PRODUCT_REVIEW_CREATE_FAIL,
     PRODUCT_REVIEW_CREATE_RESET,
+    PRODUCT_TOP_RATED_FAIL,
+    PRODUCT_TOP_RATED_SUCCESS,
+    PRODUCT_TOP_RATED_REQUEST,
 } from "../constants/productConstants"
 
 // A reducer takes in an initial state and an action
@@ -42,7 +45,6 @@ export const productListReducer = (state = {products: []}, action) => {
             return state
     }
 }
-
 
 // Single product reducer
 export const productDetailsReducer = (state = {product: { reviews:[] } }, action) => {
@@ -156,6 +158,24 @@ export const productReviewCreateReducer = (state = {}, action) => {
         case PRODUCT_REVIEW_CREATE_RESET:
             return {}
         default:
+            return state
+    }
+}
+
+
+
+export const productTopRatedReducer = (state = {products: []}, action) => {
+    switch (action.type) {
+        case PRODUCT_TOP_RATED_REQUEST:
+            return {loading: true, products: []}
+        case PRODUCT_TOP_RATED_SUCCESS:
+            return {
+                loading: false, 
+                products: action.payload
+            }
+        case PRODUCT_TOP_RATED_FAIL:
+            return {loading: false, errror: action.payload}
+        default: 
             return state
     }
 }
