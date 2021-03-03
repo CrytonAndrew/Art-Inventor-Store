@@ -5,8 +5,12 @@ import Product from "../models/productModel.js"
 // @route   Get /api/products
 // @access  public
 const getProducts = asyncHandler(async(req, res) => {
-    // We have to check whether we are going to return all products or searched products
+    const pageSize = 5 // Number of products per page
 
+    const page = Number(req.query.pageNumber) || 1 // Getting the page 
+
+
+    // We have to check whether we are going to return all products or searched products
     const keyword = req.query.keyword ? {
         name: {
             $regex : req.query.keyword, // regular expressions for when we type the first words we want that product to appear
@@ -14,8 +18,14 @@ const getProducts = asyncHandler(async(req, res) => {
         }
     } : {} // req.query is a way to get query strings such as "?"
 
-    const products = await Product.find({...keyword}) // The spread is either gonna have the keyword or return all products
-    res.json(products) 
+    const count  = await Product.countDocuments({...keyword})
+
+    // The spread is either gonna have the keyword or return all products
+    // Pagination -> .skip returns the order or products, if its page 2 we want to not return the products from page 1
+    const products = await Product.find({...keyword}).limit(pageSize).skip(pageSize * (page - 1)) 
+
+    // getting products, page, pages 
+    res.json({products, page, pages: Math.ceil(count / pageSize)}) 
 })
 
 

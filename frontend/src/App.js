@@ -42,9 +42,13 @@ const App = () => {
        <Route path="/admin/users" component={UserListScreen} />
        <Route path="/admin/user/:id/edit" component={UserEditScreen} />
        <Route path="/product/:id" component={ProductScreen} />
-       <Route path="/admin/products" component={ProductListScreen}/>
+       <Route path="/admin/products" component={ProductListScreen} exact/>
+       <Route path="/admin/products/:pageNumber" component={ProductListScreen} exact/>
        <Route path="/admin/orders" component={OrderListScreen}/>
        <Route path="/search/:keyword" component={HomeScreen} exact/>
+       <Route path="/page/:pageNumber" component={HomeScreen} exact/>
+       {/* Search for more than 10 products in a page */}
+       <Route path="/search/:keyword/page/:pageNumber" component={HomeScreen} exact/> 
        {/* id is optional  */}
        <Route path="/cart/:id?" component={CartScreen}/>
       </Container>

@@ -7,32 +7,39 @@ import Product from "../components/Product"
 import { listProducts } from "../actions/productActions"
 import Spinner from "../components/Spinner"
 import Message from "../components/Message"
+import Paginate from "../components/Paginate"
 
 const HomeScreen = ({match}) => {
     const keyword = match.params.keyword
+    const pageNumber = match.params.pageNumber || 1
 
     const dispatch = useDispatch()
 
     // Pulling the productList from the state 
     const productList = useSelector((state) => state.productList)
-    const {loading, error, products} = productList
+    const {loading, error, products, page, pages} = productList
 
     // Runs first when the component loads
     useEffect(() => {
-        dispatch(listProducts(keyword)) // Calling the action to list all the products from the action 
-    }, [dispatch, keyword])
+        dispatch(listProducts(keyword, pageNumber)) // Calling the action to list all the products from the action 
+    }, [dispatch, keyword, pageNumber])
     
     return (
         <>
           <h1>Lastest Products</h1>
           {loading ? <Spinner/> 
-          : error ? <Message variant="danger" header="Oops, Something Went Wrong" message={error}/> : <Row>
+          : error ? <Message variant="danger" header="Oops, Something Went Wrong" message={error}/> : 
+          <>
+          <Row>
               {products.map(product => (
                   <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
                       <Product product={product}/>
                   </Col>
               ))}
-          </Row>}
+          </Row>
+          <Paginate pages={pages} page={page} keyword={keyword ? keyword : ""}/>
+          </>
+          }
         </>
     )
 }

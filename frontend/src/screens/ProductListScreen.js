@@ -12,12 +12,15 @@ import {
 
 import { PRODUCT_CREATE_RESET } from "../constants/productConstants"
 
+import Paginate from "../components/Paginate"
+
 const ProductListScreen = ({ history, match }) => {
+  const pageNumber = match.params.pageNumber || 1
 
   const dispatch = useDispatch()
 
   const productList = useSelector((state) => state.productList)
-  const { loading, error, products} = productList
+  const { loading, error, products, page, pages} = productList
 
   const productDelete = useSelector((state) => state.productDelete)
   const { loading: loadingDelete, error: errorDelete, success: successDelete } = productDelete
@@ -42,7 +45,7 @@ const ProductListScreen = ({ history, match }) => {
       if (!userInfo || !userInfo.isAdmin) {
         history.push('/login')
       }
-      dispatch(listProducts())
+      dispatch(listProducts("", pageNumber))
     }
   }, [
     dispatch,
@@ -50,7 +53,8 @@ const ProductListScreen = ({ history, match }) => {
     userInfo,
     successDelete,
     successCreate,
-    productCreated
+    productCreated,
+    pageNumber
   ])
 
   const deleteHandler = (id) => {
@@ -120,6 +124,7 @@ const ProductListScreen = ({ history, match }) => {
               ))}
             </tbody>
           </Table>
+          <Paginate page={page} pages={pages} isAdmin={true}/>
         </>
       )}
     </>
