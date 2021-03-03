@@ -8,7 +8,9 @@ import { listProducts } from "../actions/productActions"
 import Spinner from "../components/Spinner"
 import Message from "../components/Message"
 
-const HomeScreen = () => {
+const HomeScreen = ({match}) => {
+    const keyword = match.params.keyword
+
     const dispatch = useDispatch()
 
     // Pulling the productList from the state 
@@ -17,8 +19,8 @@ const HomeScreen = () => {
 
     // Runs first when the component loads
     useEffect(() => {
-        dispatch(listProducts()) // Calling the action to list all the products from the action 
-    }, [dispatch])
+        dispatch(listProducts(keyword)) // Calling the action to list all the products from the action 
+    }, [dispatch, keyword])
     
     return (
         <>

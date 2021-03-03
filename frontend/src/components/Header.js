@@ -2,10 +2,13 @@ import React from 'react'
 // To call an action -> useDispatch
 // To get something from the state -> useState
 import { useDispatch, useSelector } from "react-redux"
+
+import { Route } from "react-router-dom" // Using history in Search Box
+
 import {Navbar, Nav, Button, Container, NavDropdown} from 'react-bootstrap'
 import {LinkContainer} from "react-router-bootstrap"
  import {logout} from "../actions/userActions"
-
+ import SearchBox from "./SearchBox"
 
 const Header = () => {
     // Used to call the logout action
@@ -25,6 +28,7 @@ const Header = () => {
             <Container>
                 <LinkContainer to="/"><Navbar.Brand>Since Day One</Navbar.Brand></LinkContainer>
                 <Navbar.Collapse id="basic-navbar-nav">
+                <Route render={({history}) => <SearchBox history={history}/>} />
                 <Nav className="ml-auto py-3">
                 <LinkContainer to="/cart"><Nav.Link><i className="fas fa-shopping-cart"></i> Cart</Nav.Link></LinkContainer>
                 {userInfo.isAdmin ? <LinkContainer to="/admin/orders"><Nav.Link>Orders</Nav.Link></LinkContainer> : <LinkContainer to="/orders"><Nav.Link ><i className="fas fa-receipt"></i> Orders</Nav.Link></LinkContainer>}

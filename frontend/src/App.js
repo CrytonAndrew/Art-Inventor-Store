@@ -22,6 +22,7 @@ import ProductListScreen from "./screens/ProductListScreen"
 import ProductEditScreen from "./screens/ProductEditScreen"
 import OrderListScreen from "./screens/OrderListScreen"
 
+
 const App = () => {
   return (
     <Router>
@@ -43,6 +44,7 @@ const App = () => {
        <Route path="/product/:id" component={ProductScreen} />
        <Route path="/admin/products" component={ProductListScreen}/>
        <Route path="/admin/orders" component={OrderListScreen}/>
+       <Route path="/search/:keyword" component={HomeScreen} exact/>
        {/* id is optional  */}
        <Route path="/cart/:id?" component={CartScreen}/>
       </Container>

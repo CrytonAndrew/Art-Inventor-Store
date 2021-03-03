@@ -5,7 +5,16 @@ import Product from "../models/productModel.js"
 // @route   Get /api/products
 // @access  public
 const getProducts = asyncHandler(async(req, res) => {
-    const products = await Product.find({})
+    // We have to check whether we are going to return all products or searched products
+
+    const keyword = req.query.keyword ? {
+        name: {
+            $regex : req.query.keyword, // regular expressions for when we type the first words we want that product to appear
+            $options: "i" // Case in sensitive
+        }
+    } : {} // req.query is a way to get query strings such as "?"
+
+    const products = await Product.find({...keyword}) // The spread is either gonna have the keyword or return all products
     res.json(products) 
 })
 

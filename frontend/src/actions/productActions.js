@@ -29,14 +29,14 @@ import {
 //
 // Make an asynchronous request -> Redux thunk helps (It allows us to create a function within a function)
 // Dispatch -> is for dispacthing these action above
-export const listProducts = () => async(dispatch) => {
+export const listProducts = (keyword = "") => async(dispatch) => {
     
     try {
         // Calls in the reducer -> sets loading to true
         // Products are still empty
         dispatch({type: PRODUCT_LIST_REQUEST})
 
-        const {data} = await axios.get("/api/products")
+        const {data} = await axios.get(`/api/products?keyword=${keyword}`)
 
         // Dispatch success with the payload in the reducer being filled with the products
         // This then gets passed down to the state
