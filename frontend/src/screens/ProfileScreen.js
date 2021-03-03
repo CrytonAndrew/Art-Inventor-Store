@@ -5,6 +5,7 @@ import Message from "../components/Message"
 import Spinner from "../components/Spinner"
 import { getUserDetails, updateUserProfile } from "../actions/userActions"
 import { USER_UPDATE_PROFILE_RESET } from '../constants/userConstants'
+import Meta from "../components/Meta"
 
 const ProfileScreen = ({ location, history }) => {
     const [name, setName] = useState("")
@@ -26,19 +27,18 @@ const ProfileScreen = ({ location, history }) => {
     const { success, loading: loadingUpdate} = userUpdateProfile
 
     useEffect(() => {
-        if (userInfo) {
-            if (!user.name || !user || success) {
+        if (!userInfo) {
+            history.push("/login")
+        }
+        else {
+            if(!user || !user.name || success) {
                 dispatch({type: USER_UPDATE_PROFILE_RESET})
                 dispatch(getUserDetails("profile"))
             }
             else {
-                // We have the user details
                 setName(user.name)
                 setEmail(user.email)
             }
-        }
-        else {
-            history.push("/login")
         }
     }, [dispatch, history, userInfo, user, success])
 
@@ -57,6 +57,7 @@ const ProfileScreen = ({ location, history }) => {
 
     return (
         <>
+        <Meta description={`Your profile screen with your account details: ${name}`} title={`${name}`}/>
         {error && <Message variant="danger">{error}</Message>}
         {message && <Message variant="danger">{message}</Message>}
         {success && <Message variant="success">Successfully Updated Profile</Message>}

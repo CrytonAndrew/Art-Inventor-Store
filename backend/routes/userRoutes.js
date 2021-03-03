@@ -19,12 +19,6 @@ router.route("/").post(registerUser)
 // Get all users
 router.route("/").get(protect, admin, getUsers)
 
-// Remove user
-router.route("/:id")
-    .delete(protect, admin, deleteUser)
-    .get(protect, admin, getUserById)
-    .put(protect, admin, updateUser)
-
 // Login 
 router.route("/login").post(authUser)
 
@@ -32,5 +26,12 @@ router.route("/login").post(authUser)
 router.route("/profile")
     .get(protect, getUserProfile)
     .put(protect, updateUserProfile)
+
+// Remove user
+router.route("/:id")
+    .delete(protect, admin, deleteUser)
+    .get(protect, admin, getUserById)
+    .put(protect, admin, updateUser)
+
 
 export default router

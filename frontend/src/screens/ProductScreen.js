@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react'
 import {useDispatch, useSelector} from "react-redux"
-import {Helmet} from "react-helmet"
 import {Link} from 'react-router-dom'
 import {Row, Col, Image, ListGroup, Card, Button, Form} from "react-bootstrap"
 import Rating from "../components/Rating"
@@ -8,6 +7,7 @@ import {getProductDetails, createProductReview} from "../actions/productActions"
 import { PRODUCT_REVIEW_CREATE_RESET } from "../constants/productConstants"
 import Spinner from "../components/Spinner"
 import Message from "../components/Message"
+import Meta from '../components/Meta'
 
 // History redirects to a page 
 const ProductScreen = ({match, history}) => {
@@ -50,10 +50,7 @@ const ProductScreen = ({match, history}) => {
     }
 
     return <>
-        <Helmet>
-        <title>{`${product.name}`}</title>
-        <meta name="description" content={`Product screen for ${product.name}`} />
-        </Helmet>
+        <Meta title={`${product.name}`} description={`Product screen for ${product.name}`}/>
         <Link className="btn btn-info my-3 rounded" to="/">
             Home Page
         </Link>

@@ -10,6 +10,7 @@ import Spinner from "../components/Spinner"
 import Message from "../components/Message"
 import Paginate from "../components/Paginate"
 import ProductCarousel from "../components/ProductCarousel"
+import Meta from "../components/Meta"
 
 const HomeScreen = ({match}) => {
     const keyword = match.params.keyword
@@ -28,10 +29,10 @@ const HomeScreen = ({match}) => {
     
     return (
         <>
-        <Helmet>
-        <title>Welcome Since Day One | Home</title>
-        <meta name="description" content="Get the best merch (Hoodies, Sweaters, and Many More) for the best prices" />
-        </Helmet>
+        <Meta 
+            description="Get the best merch (Hoodies, Sweaters, and Many More) for the best prices" 
+            title="Welcome Since Day One | Home"
+            />
         {!keyword && <ProductCarousel/>}
           <h1>Lastest Products</h1>
           {loading ? <Spinner/> 
