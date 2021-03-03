@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import {useDispatch, useSelector} from "react-redux"
+import {Helmet} from "react-helmet"
 import {Link} from 'react-router-dom'
 import {Row, Col, Image, ListGroup, Card, Button, Form} from "react-bootstrap"
 import Rating from "../components/Rating"
@@ -49,6 +50,10 @@ const ProductScreen = ({match, history}) => {
     }
 
     return <>
+        <Helmet>
+        <title>{`${product.name}`}</title>
+        <meta name="description" content={`Product screen for ${product.name}`} />
+        </Helmet>
         <Link className="btn btn-info my-3 rounded" to="/">
             Home Page
         </Link>

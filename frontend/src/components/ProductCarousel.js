@@ -16,7 +16,7 @@ const ProductCarousel = () => {
         dispatch(getTopRatedProducts())
     }, [dispatch])
     return loading ? <Spinner /> : error ? <Message>{error}</Message> : (
-        <Carousel pause="hover" className="bg-light">
+        <Carousel pause="hover" className="bg-dark">
             {products.map(product => (
                 <Carousel.Item key={product._id}>
                     <Link to={`/product/${product._id}`}>

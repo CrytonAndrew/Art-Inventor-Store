@@ -2,6 +2,7 @@ import React, {useEffect} from 'react'
 //  Disaptch -> Call an action
 // useSelector -> Select parts of the state (we want the productList of the state)
 import {useDispatch, useSelector} from "react-redux"
+import {Helmet} from "react-helmet";
 import {Row, Col} from "react-bootstrap"
 import Product from "../components/Product"
 import { listProducts } from "../actions/productActions"
@@ -27,6 +28,10 @@ const HomeScreen = ({match}) => {
     
     return (
         <>
+        <Helmet>
+        <title>Welcome Since Day One | Home</title>
+        <meta name="description" content="Get the best merch (Hoodies, Sweaters, and Many More) for the best prices" />
+        </Helmet>
         {!keyword && <ProductCarousel/>}
           <h1>Lastest Products</h1>
           {loading ? <Spinner/> 
