@@ -1,7 +1,7 @@
 // Since it a form some thing state will belong to the component such as the email and password
 import React, {useState, useEffect} from 'react'
 import { Link } from "react-router-dom"
-import {Form, Button, Row, Col} from "react-bootstrap"
+import {Form, Button, Row, Col, Image} from "react-bootstrap"
 import {useDispatch, useSelector} from "react-redux"
 import Spinner from "../components/Spinner"
 import Message from "../components/Message"
@@ -36,45 +36,54 @@ const LoginScreen = ({location, history}) => {
         dispatch(login(email, password))
     }
 
-    return <FormContainer>
-        <h1> Welcome Back</h1>
-        {error && <Message variant="danger">{error}</Message>}
-        {loading && <Spinner/>}
-            <Form onSubmit={submitHanlder}>
-            <Form.Group controlId='email'>
-                <Form.Label>Email: </Form.Label>
-                <Form.Control
-                    type='email'
-                    placeholder="Enter Email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                ></Form.Control>
-            </Form.Group>
-
-            {/* Password Field */}
-            <Form.Group controlId='password'>
-                <Form.Label>Password: </Form.Label>
-                <Form.Control
-                    type='password'
-                    placeholder="Enter Password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                ></Form.Control>
-            </Form.Group>
-
-            <Button type="submit" variant="primary"> Sign In </Button>
-        </Form>
-
-        <Row className="py-3">
+    return (
+        <>
+        <Row className="login-row">
             <Col>
-                New Customer?{' '}
-                <Link to={redirect ? `/register?redirect=${redirect}` : "/register"}>
-                    Register
-                </Link>
+                <Image src="images/login.jpg" alt="aim for the sky" className="login-img"/>
             </Col>
-        </Row>
-    </FormContainer>
-    
+
+            <Col className="login-col" >
+                <h1 className="login-header"> Welcome Back</h1>
+                    {error && <Message variant="danger">{error}</Message>}
+                    {loading && <Spinner/>}
+                        <Form onSubmit={submitHanlder} className="login-form">
+                        <Form.Group controlId='email'>
+                            <Form.Label>Email: </Form.Label>
+                            <Form.Control
+                                type='email'
+                                placeholder="Enter Email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                            ></Form.Control>
+                        </Form.Group>
+
+                        {/* Password Field */}
+                        <Form.Group controlId='password'>
+                            <Form.Label>Password: </Form.Label>
+                            <Form.Control
+                                type='password'
+                                placeholder="Enter Password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                            ></Form.Control>
+                        </Form.Group>
+
+                        <Button type="submit" variant="primary"> Sign In </Button>
+                    </Form>
+
+                    <Row className="py-3 login-text-customer">
+                        <Col>
+                            New Customer?{' '}
+                            <Link to={redirect ? `/register?redirect=${redirect}` : "/register"}>
+                                Register
+                            </Link>
+                        </Col>
+                    </Row>
+                </Col>
+            </Row>
+        </>
+    )
 }
 
 export default LoginScreen

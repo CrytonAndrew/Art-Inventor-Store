@@ -16,6 +16,7 @@
   "author": "Cryton Sibanda",
   "license": "ISC",
   "dependencies": {
+    "@material-ui/core": "^4.11.3",
     "bcryptjs": "^2.4.3",
     "colors": "^1.4.0",
     "dotenv": "^8.2.0",
