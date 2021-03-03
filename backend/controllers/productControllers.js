@@ -148,21 +148,6 @@ const createProductReview = asyncHandler(async(req, res) => {
 })
 
 
-const getProductReviews = asyncHandler(async(req, res) => {
-    const productId = req.params.id
-
-    const product = Product.findById(productId)
-
-    if (product) {
-        res.status(200)
-        res.json(product)
-    }
-    else {
-        res.status(401)
-        throw new Error("Product does not exist")
-    }
-})
 
 
-
-export {getProducts, getProductById, deleteProduct, updateProduct, createProduct, createProductReview, getProductReviews}
+export {getProducts, getProductById, deleteProduct, updateProduct, createProduct, createProductReview}

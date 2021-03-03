@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from "react-redux"
 import {Link} from 'react-router-dom'
 import {Row, Col, Image, ListGroup, Card, Button, Form} from "react-bootstrap"
 import Rating from "../components/Rating"
-import {getProductDetails, createProductReview, getProductReview} from "../actions/productActions"
+import {getProductDetails, createProductReview} from "../actions/productActions"
 import { PRODUCT_REVIEW_CREATE_RESET } from "../constants/productConstants"
 import Spinner from "../components/Spinner"
 import Message from "../components/Message"
@@ -25,19 +25,18 @@ const ProductScreen = ({match, history}) => {
     const { userInfo } = userLogin
 
     const productReviewCreate = useSelector((state) => state.productReviewCreate)
-    const {error: errorReview, success: successReview} = productReviewCreate
-
-    const productReview = useSelector(state => state.productReview)
-    const {error: errorGetReviews, loading: loadingGetReview, product: productGetReviews} = productReview
-
+    const {error: errorReviewCreate, success: successReviewCreate, loading: loadingReviewCreate} = productReviewCreate
 
     useEffect(() => {
-        if (successReview) {
-            dispatch({type: PRODUCT_REVIEW_CREATE_RESET})
-            dispatch(getProductReview(match.params.id))
+        if (successReviewCreate) {
+            setRating(0)
+            setComment("")
         }
-        dispatch(getProductDetails(match.params.id))
-    }, [match, dispatch, successReview])
+        if (!product._id && product._id  !== match.params.id){
+            dispatch(getProductDetails(match.params.id))
+            dispatch({type: PRODUCT_REVIEW_CREATE_RESET})
+        }
+    }, [match, dispatch, successReviewCreate, product._id])
 
     
     const addToCartHandler = () => {
@@ -74,32 +73,6 @@ const ProductScreen = ({match, history}) => {
                        {product.description}
                     </ListGroup.Item>
                 </ListGroup>
-
-                <h2>
-                    Reviews
-                </h2>
-                    {errorGetReviews && <Message>{errorGetReviews}</Message>}
-
-                    {loadingGetReview ? <Spinner/> : productGetReviews.map((review) => (
-                        <Row>
-                            <Row>
-                                <Col>
-                                    <Image src="images/sample.jpg" alt={`${review.name}`} />
-                                </Col>
-                                <Col>
-                                    <h4>{review.name}</h4>
-                                    <p>{review.comment}</p>
-                                </Col>
-                            </Row>
-                            <Row>
-                                <Col>
-                                    <Rating value={review.rating} text=" review"/>
-                                </Col>
-                            </Row>
-                        </Row>
-                       
-                    ))}
-                
             </Col>
             <Col md={3}>
                 <Card>
@@ -164,42 +137,73 @@ const ProductScreen = ({match, history}) => {
                 </Card>
             </Col>
         </Row>
+
         <Row>
-            <Col>
-            <h1>Review Product</h1>
-            {errorReview && <Message variant="danger">{errorReview}</Message>}
-            {successReview && <Message variant="success">Successfully created new review</Message>}
-                {userInfo 
-                ? <Form onSubmit={submitReviewHandler}>
-                    <Form.Group controlId="rating">
-                        <Form.Label>Choose Rating:</Form.Label>
-                        <Form.Control as="select" onChange={(e) => setRating(e.target.value)}>
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
+            <Col md={6}>
+              <h2>Reviews</h2>
+              {product.reviews.length === 0 && <Message>No Reviews</Message>}
+              <ListGroup variant='flush'>
+                {product.reviews.map((review) => (
+                  <ListGroup.Item key={review._id}>
+                    <strong>{review.name}</strong>
+                    <Rating value={review.rating} />
+                    <p>{review.createdAt.substring(0, 10)}</p>
+                    <p>{review.comment}</p>
+                  </ListGroup.Item>
+                ))}
+                <ListGroup.Item>
+                  <h2>Write a Customer Review</h2>
+                  {successReviewCreate && (
+                    <Message variant='success'>
+                      Review submitted successfully
+                    </Message>
+                  )}
+                  {loadingReviewCreate ? <Spinner /> : errorReviewCreate && (
+                    <Message variant='danger'>{errorReviewCreate}</Message>
+                  )}
+                  {userInfo ? (
+                    <Form onSubmit={submitReviewHandler}>
+                      <Form.Group controlId='rating'>
+                        <Form.Label>Rating</Form.Label>
+                        <Form.Control
+                          as='select'
+                          value={rating}
+                          onChange={(e) => setRating(e.target.value)}
+                        >
+                          <option value=''>Select...</option>
+                          <option value='1'>1 - Poor</option>
+                          <option value='2'>2 - Fair</option>
+                          <option value='3'>3 - Good</option>
+                          <option value='4'>4 - Very Good</option>
+                          <option value='5'>5 - Excellent</option>
                         </Form.Control>
-                    </Form.Group>
-
-                    <Form.Group controlId="comment">
-                        <Form.Label>Comment:</Form.Label>
-                        <Form.Control as="textarea" rows={3} onChange={(e) => setComment(e.target.value)}/>
-                    </Form.Group>
-
-                    <Button type="submit" variant="primary" className="btn">
-                        Add Review
-                    </Button>
-                </Form>
-                : <Message variant="info">
-                    In order to write a review you should be signed in. Go here to <Link to="/login">Sign In</Link>
-                </Message>
-                }
+                      </Form.Group>
+                      <Form.Group controlId='comment'>
+                        <Form.Label>Comment</Form.Label>
+                        <Form.Control
+                          as='textarea'
+                          row='3'
+                          value={comment}
+                          onChange={(e) => setComment(e.target.value)}
+                        ></Form.Control>
+                      </Form.Group>
+                      <Button
+                        disabled={productReviewCreate}
+                        type='submit'
+                        variant='primary'
+                      >
+                        Submit
+                      </Button>
+                    </Form>
+                  ) : (
+                    <Message>
+                      Please <Link to='/login'>sign in</Link> to write a review{' '}
+                    </Message>
+                  )}
+                </ListGroup.Item>
+              </ListGroup>
             </Col>
-            <Col>
-                {/* Rating so far showing icons -> Highligt the state of the product from poor to good */}
-            </Col>
-        </Row>
+          </Row>
         </>
         }
     </>
