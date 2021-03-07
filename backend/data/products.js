@@ -22,7 +22,7 @@ const products = [
     },
     {
         name: "Black Hoodie - AI",
-        image: "/images/hoodie-black2.png",
+        image: "/images/hoodie-black-2.png",
         description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ac maximus magna. In eget sapien a turpis volutpat cursus eu pharetra leo. Donec erat sem, luctus ut velit id, pretium pharetra neque. Nullam ornare dui quam, ut elementum metus tristique quis. Donec sed gravida massa, ac vestibulum risus. Nunc sed odio nec tortor ullamcorper fermentum. Nam efficitur vitae velit id dignissim. Ut a justo ac ante sodales pulvinar id at est. Suspendisse accumsan leo sit amet hendrerit varius. Donec vehicula, diam tincidunt mattis mattis, odio dui tincidunt arcu, sed venenatis erat quam a enim. Mauris fringilla massa at dui egestas interdum.",
         category: "Hoodies",
         price: 399,
