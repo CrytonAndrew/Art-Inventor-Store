@@ -23,6 +23,9 @@ import {
     PRODUCT_TOP_RATED_FAIL,
     PRODUCT_TOP_RATED_SUCCESS,
     PRODUCT_TOP_RATED_REQUEST,
+    PRODUCT_HOODIE_REQUEST,
+    PRODUCT_HOODIE_SUCCESS,
+    PRODUCT_HOODIE_FAIL,
 } from "../constants/productConstants"
 
 // A reducer takes in an initial state and an action
@@ -174,6 +177,27 @@ export const productTopRatedReducer = (state = {products: []}, action) => {
                 products: action.payload
             }
         case PRODUCT_TOP_RATED_FAIL:
+            return {loading: false, errror: action.payload}
+        default: 
+            return state
+    }
+}
+
+
+
+
+export const productHoodieReducer = (state = {products: []}, action) => {
+    switch (action.type) {
+        case PRODUCT_HOODIE_REQUEST:
+            return {loading: true, products: []}
+        case PRODUCT_HOODIE_SUCCESS:
+            return {
+                loading: false, 
+                products: action.payload.products, 
+                pages: action.payload.pages, 
+                page: action.payload.page
+            }
+        case PRODUCT_HOODIE_FAIL:
             return {loading: false, errror: action.payload}
         default: 
             return state

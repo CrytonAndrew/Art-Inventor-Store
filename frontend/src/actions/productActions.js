@@ -22,6 +22,9 @@ import {
     PRODUCT_TOP_RATED_REQUEST,
     PRODUCT_TOP_RATED_SUCCESS,
     PRODUCT_TOP_RATED_FAIL,
+    PRODUCT_HOODIE_REQUEST,
+    PRODUCT_HOODIE_SUCCESS,
+    PRODUCT_HOODIE_FAIL,
 } from "../constants/productConstants"
 
 
@@ -240,5 +243,31 @@ export const getTopRatedProducts = () => async(dispatch) => {
     }
 }
 
+
+export const listHoodieProducts = (pageNumber = "") => async(dispatch) => {
+    
+    try {
+        // Calls in the reducer -> sets loading to true
+        // Products are still empty
+        dispatch({type: PRODUCT_HOODIE_REQUEST})
+
+        const {data} = await axios.get(`/api/products/hoodie?pageNumber=${pageNumber}`)
+
+        // Dispatch success with the payload in the reducer being filled with the products
+        // This then gets passed down to the state
+        dispatch({
+            type: PRODUCT_HOODIE_SUCCESS,
+            payload: data
+        })
+
+    } catch (error) {
+        dispatch({
+            type: PRODUCT_HOODIE_FAIL,
+            payload: error.response && error.response.data.message 
+                ? error.response.data.message 
+                : error.message
+        })
+    }
+}
 
 

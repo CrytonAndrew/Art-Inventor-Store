@@ -2,10 +2,9 @@ import React, {useEffect} from 'react'
 //  Disaptch -> Call an action
 // useSelector -> Select parts of the state (we want the productList of the state)
 import {useDispatch, useSelector} from "react-redux"
-import {Helmet} from "react-helmet";
 import {Row, Col} from "react-bootstrap"
 import Product from "../components/Product"
-import { listProducts } from "../actions/productActions"
+import { listProducts, listHoodieProducts} from "../actions/productActions"
 import Spinner from "../components/Spinner"
 import Message from "../components/Message"
 import Paginate from "../components/Paginate"
@@ -22,9 +21,19 @@ const HomeScreen = ({match}) => {
     const productList = useSelector((state) => state.productList)
     const {loading, error, products, page, pages} = productList
 
+    const productHoodie = useSelector((state) => state.productHoodie)
+    const {
+        loading: loadingHoodie, 
+        error: errorHoodie, 
+        products: productsHoodie, 
+        page: pageHoodie, 
+        pages: pagesHoodie
+    } = productHoodie
+
     // Runs first when the component loads
     useEffect(() => {
         dispatch(listProducts(keyword, pageNumber)) // Calling the action to list all the products from the action 
+        dispatch(listHoodieProducts(pageNumber))
     }, [dispatch, keyword, pageNumber])
     
     return (
@@ -48,6 +57,17 @@ const HomeScreen = ({match}) => {
           <Paginate pages={pages} page={page} keyword={keyword ? keyword : ""}/>
           </>
           }
+          <h1>Lastest Hoodies</h1>
+          {!keyword && <>
+              <Row>
+                  {productsHoodie.map(product => (
+                    <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
+                      <Product product={product}/>
+                    </Col>
+                  ))}
+              </Row>
+              {/* <Paginate pages={pagesHoodie} page={pageHoodie} keyword={""}/> */}
+          </>}
         </>
     )
 }

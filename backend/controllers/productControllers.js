@@ -180,4 +180,36 @@ const getTopProducts = asyncHandler(async(req, res) => {
 
 
 
-export {getProducts, getProductById, deleteProduct, updateProduct, createProduct, createProductReview, getTopProducts}
+
+// @desc    Get hoodie products
+// @route   Get /api/products/hoodies
+// @access  public
+const getHoodieProducts = asyncHandler(async(req, res) => {
+    const pageSize = 4 // Number of products per page
+
+    const page = Number(req.query.pageNumber) || 1 // Getting the page 
+
+
+    // We have to check whether we are going to return all products or searched products
+    const count  = await Product.countDocuments({})
+
+    // The spread is either gonna have the keyword or return all products
+    // Pagination -> .skip returns the order or products, if its page 2 we want to not return the products from page 1
+    const products = await Product.find({category: "Hoodies"}).limit(pageSize).skip(pageSize * (page - 1)) 
+
+    // getting products, page, pages 
+    res.json({products, page, pages: Math.ceil(count / pageSize)}) 
+})
+
+
+
+export {
+    getProducts, 
+    getProductById, 
+    deleteProduct, 
+    updateProduct, 
+    createProduct, 
+    createProductReview, 
+    getTopProducts,
+    getHoodieProducts
+}
