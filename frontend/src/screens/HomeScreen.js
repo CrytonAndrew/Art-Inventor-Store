@@ -57,8 +57,9 @@ const HomeScreen = ({match}) => {
           <Paginate pages={pages} page={page} keyword={keyword ? keyword : ""}/>
           </>
           }
-          <h1>Lastest Hoodies</h1>
-          {!keyword && <>
+          
+          {!keyword && loadingHoodie ? <Spinner /> : errorHoodie ? <Message>{errorHoodie}</Message> : <>
+            <h1>Lastest Hoodies</h1>
               <Row>
                   {productsHoodie.map(product => (
                     <Col key={product._id} sm={12} md={6} lg={4} xl={3}>

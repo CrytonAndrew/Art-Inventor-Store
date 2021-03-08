@@ -1,5 +1,6 @@
 import React from 'react'
 import {Container, Row, Col} from "react-bootstrap";
+import {Link} from "react-router-dom"
 
 const Footer = () => {
     return (
@@ -8,7 +9,7 @@ const Footer = () => {
             <div className="main-footer">
                 <Row>
                     <Col sm={12} md={4} lg={3}>
-                        <h4>Since Day One</h4>
+                        <h4>Art Inventor</h4>
                         <p>
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
                         Vivamus et sollicitudin lacus. Aenean gravida eu tortor at tempus.
@@ -20,9 +21,9 @@ const Footer = () => {
                     <h4 className="footer-titles">Account Info</h4>
                     <div className="lists">
                         <ul>
-                            <li>Profile</li>
-                            <li>My Cart</li>
-                            <li>My Orders</li>
+                            <Link to="/profile"><li>Profile</li></Link>
+                            <Link to="/cart"><li>My Cart</li></Link>
+                            <Link to="/orders"><li>My Orders</li></Link>
                         </ul>
                     </div>  
                     </Col>
@@ -30,15 +31,9 @@ const Footer = () => {
                     <h4 className="footer-titles">Need Help?</h4>
                     <div className="lists">
                         <ul>
-                            <li>
-                                Help
-                            </li>
-                            <li>
-                                Get In Touch
-                            </li>
-                            <li>
-                                Product Requests
-                            </li>
+                            <Link><li>Help</li></Link>
+                            <Link><li>Get In Touch</li></Link>
+                            <Link><li>Product Requests</li></Link>
                         </ul>
                     </div>  
                     </Col>
@@ -46,13 +41,9 @@ const Footer = () => {
                     <h4 className="footer-titles">About Us</h4>
                     <div className="lists">
                         <ul>
-                            <li>
-                               About Us
-                            </li>
-                            <li>Blog
-                            </li>
-                            <li>Terms & Conditions
-                            </li>
+                            <Link><li>About Us</li></Link>
+                            <Link><li>Blog</li></Link>
+                            <Link><li>Terms & Conditions</li></Link>
                         </ul>
                     </div>   
                     </Col>
