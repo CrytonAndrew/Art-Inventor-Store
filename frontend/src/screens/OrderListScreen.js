@@ -31,13 +31,14 @@ const OrderListScreen = ({ history, match }) => {
   return (
     <>
     {loading ? <Spinner/> : error ? <Message>{error}</Message> : (
-        <>
+        <div className="order-list-div">
         <Row className='align-items-center'>
         <Col>
           <h1>Orders</h1>
         </Col>
       </Row>
-          <Table striped bordered hover responsive className='table-sm'>
+      {orders.length === 0 && <Message>There are no orders that have been placed yet</Message>}
+          <Table striped bordered hover responsive className='table-sm orders-list-table'>
             <thead>
               <tr>
                 <th>ID</th>
@@ -71,7 +72,7 @@ const OrderListScreen = ({ history, match }) => {
               ))}
             </tbody>
           </Table>
-        </>
+        </div>
     )}
     </>
   )
