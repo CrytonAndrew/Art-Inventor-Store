@@ -15,10 +15,6 @@ body {
   font-family: "Open Sans", sans-serif;
 }
 
-footer {
-  background-color: #00adb5;
-}
-
 li {
   list-style-type: none;
   display: list-item;
@@ -32,7 +28,7 @@ li {
 }
 
 .login-col {
-  background-color: #00adb5;
+  background-color: #30475e;
   margin-right: 160px;
   border-top-right-radius: 5%;
   border-bottom-right-radius: 5%;
@@ -100,11 +96,28 @@ li {
   padding-bottom: 20px;
 }
 
+.search_form {
+  padding-left: 250px;
+}
+
 /* Footer lists */
+
+footer {
+  background-color: #222831;
+}
 
 .lists {
   margin-right: 20px;
   text-align: left;
+  color: #fff;
+}
+
+.list-item:hover {
+  color: teal;
+}
+
+.list-item {
+  color: #fff;
 }
 
 .main-footer {

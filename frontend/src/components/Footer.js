@@ -21,9 +21,9 @@ const Footer = () => {
                     <h4 className="footer-titles">Account Info</h4>
                     <div className="lists">
                         <ul>
-                            <Link to="/profile"><li>Profile</li></Link>
-                            <Link to="/cart"><li>My Cart</li></Link>
-                            <Link to="/orders"><li>My Orders</li></Link>
+                            <Link to="/profile"><li className="list-item">Profile</li></Link>
+                            <Link to="/cart"><li className="list-item">My Cart</li></Link>
+                            <Link to="/orders"><li className="list-item">My Orders</li></Link>
                         </ul>
                     </div>  
                     </Col>
@@ -31,9 +31,9 @@ const Footer = () => {
                     <h4 className="footer-titles">Need Help?</h4>
                     <div className="lists">
                         <ul>
-                            <Link><li>Help</li></Link>
-                            <Link><li>Get In Touch</li></Link>
-                            <Link><li>Product Requests</li></Link>
+                            <Link><li className="list-item">Help</li></Link>
+                            <Link><li className="list-item">Get In Touch</li></Link>
+                            <Link><li className="list-item">Product Requests</li></Link>
                         </ul>
                     </div>  
                     </Col>
@@ -41,9 +41,9 @@ const Footer = () => {
                     <h4 className="footer-titles">About Us</h4>
                     <div className="lists">
                         <ul>
-                            <Link><li>About Us</li></Link>
-                            <Link><li>Blog</li></Link>
-                            <Link><li>Terms & Conditions</li></Link>
+                            <Link><li className="list-item">About Us</li></Link>
+                            <Link><li className="list-item">Blog</li></Link>
+                            <Link><li className="list-item">Terms & Conditions</li></Link>
                         </ul>
                     </div>   
                     </Col>
