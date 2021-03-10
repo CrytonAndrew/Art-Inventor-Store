@@ -41,7 +41,7 @@ const CartScreen = ({match, location, history}) => {
     // Restructure the screen into a card screen
     return (
         <>
-           <Row>
+           <Row className="order-screen-row">
                <Col md={8}>
                     <h1>Shopping Cart</h1>
                     {cartItems.length === 0 ? <Message>Your cart is empty <Link to="/"> Go back </Link></Message> 
