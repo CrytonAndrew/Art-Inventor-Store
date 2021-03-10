@@ -7,7 +7,8 @@ import {
     createProduct,
     createProductReview,
     getTopProducts,
-    getHoodieProducts
+    getHoodieProducts,
+    getSweaterProducts
 } from "../controllers/productControllers.js"
 import { protect, admin } from "../middleware/authMiddleware.js";
 
@@ -21,6 +22,8 @@ router.route("/")
 router.get("/top", getTopProducts)
 
 router.get("/hoodie", getHoodieProducts)
+
+router.get("/sweaters", getSweaterProducts)
 
 router.route("/:id")
     .get(getProductById)

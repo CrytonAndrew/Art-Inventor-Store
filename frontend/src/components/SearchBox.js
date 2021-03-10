@@ -25,7 +25,7 @@ const SearchBox = ({history}) => {
                 // size="lg"
                 onChange={(e) => setKeyword(e.target.value)}
                 placeholder="Search for merch..."
-                className="mr-sm-2 ml-sm-5 search_box"
+                className="mr-md-2 ml-md-5 search_box"
             >
 
             </Form.Control>
