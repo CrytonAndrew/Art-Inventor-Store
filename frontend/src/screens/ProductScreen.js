@@ -58,10 +58,10 @@ const ProductScreen = ({match, history}) => {
         {loading ? <Spinner /> : error ? <Message variant="danger">{error}</Message> : 
         <>
         <Row>
-            <Col md={5}>
+            <Col md={4}>
                 <Image className="product_screen_image" src={product.image} alt={product.name} rounded fluid/>
             </Col>
-            <Col md={3}>
+            <Col md={4} className="product-info-col">
                 <ListGroup variant="flush">
                     <ListGroup.Item>
                         <h2>{product.name}</h2>
