@@ -23,7 +23,7 @@ const MyOrders = () => {
   }, [dispatch, userInfo ])
 
   return (
-    <Row>
+    <Row className="my_orders_row">
       <Col>
         <h2>My Orders</h2>
         {loadingOrders ? (
