@@ -208,7 +208,7 @@ const getHoodieProducts = asyncHandler(async(req, res) => {
 const getSweaterProducts = asyncHandler(async(req, res) => {
     const pageSize = 4 // Number of products per page
 
-    // const page = Number(req.query.pageNumber) || 1 // Getting the page 
+    const page = Number(req.query.pageNumber) || 1 // Getting the page 
 
 
     // We have to check whether we are going to return all products or searched products
@@ -216,10 +216,10 @@ const getSweaterProducts = asyncHandler(async(req, res) => {
 
     // The spread is either gonna have the keyword or return all products
     // Pagination -> .skip returns the order or products, if its page 2 we want to not return the products from page 1
-    const products = await Product.find({category: "Sweaters"}).limit(pageSize)
+    const products = await Product.find({category: "Sweaters"}).limit(pageSize).skip(pageSize * (page - 1)) 
 
     // getting products, page, pages 
-    res.json({products}) 
+    res.json({products, page, pages: Math.ceil(count / pageSize)}) 
 })
 
 

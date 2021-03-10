@@ -26,6 +26,9 @@ import {
     PRODUCT_HOODIE_REQUEST,
     PRODUCT_HOODIE_SUCCESS,
     PRODUCT_HOODIE_FAIL,
+    PRODUCT_SWEATER_FAIL,
+    PRODUCT_SWEATER_REQUEST,
+    PRODUCT_SWEATER_SUCCESS,
 } from "../constants/productConstants"
 
 // A reducer takes in an initial state and an action
@@ -200,6 +203,30 @@ export const productHoodieReducer = (state = {products: []}, action) => {
         case PRODUCT_HOODIE_FAIL:
             return {loading: false, errror: action.payload}
         default: 
+            return state
+    }
+}
+
+export const productSweaterReducer = (state = {products: []}, action) => {
+    switch (action.type) {
+        case PRODUCT_SWEATER_REQUEST:
+            return {
+                loading: true, 
+                products: []
+            }
+        case PRODUCT_SWEATER_SUCCESS:
+            return {
+                laoding: false,
+                products: action.payload,
+                pages: action.payload.pages, 
+                page: action.payload.page
+            }
+        case PRODUCT_SWEATER_FAIL:
+            return {
+                loading: false,
+                error: action.payload
+            }
+        default:
             return state
     }
 }

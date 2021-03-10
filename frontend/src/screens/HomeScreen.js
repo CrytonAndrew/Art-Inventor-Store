@@ -4,7 +4,7 @@ import React, {useEffect} from 'react'
 import {useDispatch, useSelector} from "react-redux"
 import {Row, Col} from "react-bootstrap"
 import Product from "../components/Product"
-import { listProducts, listHoodieProducts} from "../actions/productActions"
+import { listProducts, listHoodieProducts, listSweaterProducts} from "../actions/productActions"
 import Spinner from "../components/Spinner"
 import Message from "../components/Message"
 import Paginate from "../components/Paginate"
@@ -26,14 +26,18 @@ const HomeScreen = ({match}) => {
         loading: loadingHoodie, 
         error: errorHoodie, 
         products: productsHoodie, 
-        page: pageHoodie, 
-        pages: pagesHoodie
+        // page: pageHoodie, 
+        // pages: pagesHoodie
     } = productHoodie
+
+    const productSweater = useSelector(state => state.productSweater)
+    const {error: errorSweater, loaidng: loadingSweater, products: productsSweater} = productSweater
 
     // Runs first when the component loads
     useEffect(() => {
         dispatch(listProducts(keyword, pageNumber)) // Calling the action to list all the products from the action 
         dispatch(listHoodieProducts(pageNumber))
+        dispatch(listSweaterProducts(pageNumber))
     }, [dispatch, keyword, pageNumber])
     
     return (
@@ -68,6 +72,17 @@ const HomeScreen = ({match}) => {
                   ))}
               </Row>
               {/* <Paginate pages={pagesHoodie} page={pageHoodie} keyword={""}/> */}
+          </>}
+
+          {!keyword && loadingSweater ? <Spinner /> : errorSweater ? <Message>{errorSweater}</Message> : <>
+              <h1>Lastest Sweaters</h1>
+              <Row>
+                  {productsSweater.map(product => (
+                    <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
+                        <Product product={product}/>
+                    </Col>  
+                  ))}
+              </Row>
           </>}
         </>
     )

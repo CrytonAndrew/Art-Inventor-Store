@@ -23,7 +23,7 @@ router.get("/top", getTopProducts)
 
 router.get("/hoodie", getHoodieProducts)
 
-router.get("/sweaters", getSweaterProducts)
+router.get("/sweater", getSweaterProducts)
 
 router.route("/:id")
     .get(getProductById)
