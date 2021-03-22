@@ -76,13 +76,13 @@ const HomeScreen = ({match}) => {
 
           {!keyword && loadingSweater ? <Spinner /> : errorSweater ? <Message>{errorSweater}</Message> : <>
               <h1>Lastest Sweaters</h1>
-              <Row>
+              {/* <Row>
                   {productsSweater.map(product => (
                     <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
                         <Product product={product}/>
                     </Col>  
                   ))}
-              </Row>
+              </Row> */}
           </>}
         </>
     )
